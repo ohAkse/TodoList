@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-
+import NVActivityIndicatorView
 class MemoHomeViewController : UIViewController{
     
     lazy var mainImageView: UIImageView = {
@@ -42,14 +42,23 @@ class MemoHomeViewController : UIViewController{
         return button
     }()
     
+    let mainLoadingindicator = NVActivityIndicatorView(
+        frame: CGRect.zero,
+        type: .ballSpinFadeLoader,
+        color: .black,
+        padding: 0
+    )
+
+    let instance = NetworkManager.instance
     override func viewDidAppear(_ animated: Bool) {
-        if #available(iOS 15.0, *) {
+        if #available(iOS 16.0, *) {
             Task{
                 await setupLogoImageViewAsync()
             }
         }else{
             setLogoImageView()
         }
+        mainLoadingindicator.startAnimating()
     }
     func setLogoImageView(){
         
@@ -57,6 +66,7 @@ class MemoHomeViewController : UIViewController{
             guard let self = self else { return }
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                mainLoadingindicator.stopAnimating()
                 mainImageView.image = image
             }
         }
@@ -67,24 +77,23 @@ class MemoHomeViewController : UIViewController{
             let image =  await instance.getImageAsync(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg")
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                mainLoadingindicator.stopAnimating()
                 mainImageView.image = image
             }
         }
     }
-    let instance = NetworkManager.instance
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
         setupLayout()
     }
     
-    
-    
     func setupSubviews(){
         view.addSubview(mainImageView)
         view.addSubview(moveToListButton)
         view.addSubview(moveToCompleteButton)
         view.addSubview(moveToAnimalButton)
+        view.addSubview(mainLoadingindicator)
     }
     
     func setupLayout(){
@@ -92,6 +101,12 @@ class MemoHomeViewController : UIViewController{
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.width.equalToSuperview().multipliedBy(0.5)
+        }
+        mainLoadingindicator.snp.makeConstraints { make in
+            make.centerX.equalTo(mainImageView.snp.centerX)
+            make.centerY.equalTo(mainImageView.snp.centerY)
+            make.width.equalToSuperview().multipliedBy(0.5)
+            make.height.equalToSuperview().multipliedBy(0.5)
         }
         moveToListButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

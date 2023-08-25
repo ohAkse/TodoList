@@ -6,9 +6,9 @@
 //
 
 import Foundation
-
 final class LocalDBManager{
     static let instance = LocalDBManager()
+    //아이템 생성할때
     func createData(category: String, item: SectionItem) {
         var categories = getCategoriesFromUserDefaults()
         if let index = categories.firstIndex(where: { $0.name == category }) {
@@ -18,7 +18,7 @@ final class LocalDBManager{
             print("Category not found: \(category)")
         }
     }
-
+    //내부적에서 카테고리 얻을때
     func getCategoriesFromUserDefaults() -> [Category] {
         do {
             if let data = UserDefaults.standard.data(forKey: "categories") {
@@ -32,7 +32,7 @@ final class LocalDBManager{
             return []
         }
     }
-
+    //변경사항 있을 때 저장
     func saveCategoriesToUserDefaults(_ categories: [Category]) {
         do {
             let data = try JSONEncoder().encode(categories)
@@ -42,7 +42,7 @@ final class LocalDBManager{
             print("Error encoding categories: \(error)")
         }
     }
-    
+    //초기 카테고리 얻기
     func initializeCategoriesIfNeeded() {
         if UserDefaults.standard.object(forKey: "categories") == nil {
             let initialData: [Category] = [

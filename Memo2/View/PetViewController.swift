@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import NVActivityIndicatorView
 class PetViewController : UIViewController
 {
     let instance = NetworkManager.instance
@@ -20,6 +20,20 @@ class PetViewController : UIViewController
         return imageView
     }()
     
+    let catLoadingindicator = NVActivityIndicatorView(
+        frame: CGRect.zero,
+        type: .ballSpinFadeLoader,
+        color: .black,
+        padding: 0
+    )
+    
+    let dogLoadingindicator = NVActivityIndicatorView(
+        frame: CGRect.zero,
+        type: .ballSpinFadeLoader,
+        color: .black,
+        padding: 0
+    )
+    
     deinit{
         print("PetViewController deinit called")
     }
@@ -29,13 +43,15 @@ class PetViewController : UIViewController
         setupLayout()
     }
     override func viewDidAppear(_ animated: Bool) {
-        if #available(iOS 15, *) {
+        if #available(iOS 16, *) {
             Task{
                 await setupImagesAsync()
             }
         }else{
             setupImages()
         }
+        catLoadingindicator.startAnimating()
+        dogLoadingindicator.startAnimating()
     }
     func setupImagesAsync() async {
         let dogImageURL = "https://api.thedogapi.com/v1/images/search"
@@ -47,8 +63,10 @@ class PetViewController : UIViewController
             
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.dogImageView.image = dogImage
-                self.catImageView.image = catImage
+                dogLoadingindicator.stopAnimating()
+                dogImageView.image = dogImage
+                catLoadingindicator.stopAnimating()
+                catImageView.image = catImage
             }
         } catch {
             print("Error: \(error.localizedDescription)")
@@ -57,32 +75,34 @@ class PetViewController : UIViewController
     func setupImages() {
         let dogImageURL = "https://api.thedogapi.com/v1/images/search"
         let catImageURL = "https://api.thecatapi.com/v1/images/search"
-        
         let group = DispatchGroup()
         group.enter()
         instance.fetchRandomImage(imageUrl: dogImageURL) { [weak self] dogImage in
             guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.dogImageView.image = dogImage
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                dogLoadingindicator.stopAnimating()
+                dogImageView.image = dogImage
                 group.leave()
             }
         }
         group.enter()
         instance.fetchRandomImage(imageUrl: catImageURL) { [weak self] catImage in
             guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.catImageView.image = catImage
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                catLoadingindicator.stopAnimating()
+                catImageView.image = catImage
                 group.leave()
             }
         }
     }
     
-    
-    
     func setupSubviews(){
         view.addSubview(dogImageView)
         view.addSubview(catImageView)
-        
+        view.addSubview(catLoadingindicator)
+        view.addSubview(dogLoadingindicator)
     }
     
     func setupLayout(){
@@ -91,6 +111,12 @@ class PetViewController : UIViewController
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(60)
             make.width.equalToSuperview().multipliedBy(0.6)
         }
+        dogLoadingindicator.snp.makeConstraints { make in
+            make.centerX.equalTo(dogImageView.snp.centerX)
+            make.centerY.equalTo(dogImageView.snp.centerY)
+            make.width.equalToSuperview().multipliedBy(0.5)
+            make.height.equalToSuperview().multipliedBy(0.5)
+        }
         catImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(dogImageView.snp.bottom).offset(30)
@@ -98,6 +124,12 @@ class PetViewController : UIViewController
             make.width.equalTo(dogImageView.snp.width)
             make.height.equalTo(dogImageView.snp.height)
             
+        }
+        catLoadingindicator.snp.makeConstraints { make in
+            make.centerX.equalTo(catImageView.snp.centerX)
+            make.centerY.equalTo(catImageView.snp.centerY)
+            make.width.equalToSuperview().multipliedBy(0.5)
+            make.height.equalToSuperview().multipliedBy(0.5)
         }
     }
 }

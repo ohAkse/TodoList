@@ -60,8 +60,8 @@ class MemoWriteViewController : UIViewController, UITextViewDelegate
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.width.equalTo(200)
-            make.height.equalTo(100)
+            make.width.equalToSuperview().multipliedBy(0.5)
+            make.height.equalToSuperview().multipliedBy(0.1)
         }
         textContent.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -73,8 +73,8 @@ class MemoWriteViewController : UIViewController, UITextViewDelegate
         confirmButton.snp.makeConstraints { make in
             make.top.equalTo(textContent.snp.bottom).offset(20)
             make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-20)
-            make.height.equalTo(50)
-            make.width.equalTo(100)
+            make.width.equalToSuperview().multipliedBy(0.2)
+            make.height.equalToSuperview().multipliedBy(0.09)
         }
     }
     @objc func confirmButtonTapped() {
@@ -89,6 +89,7 @@ class MemoWriteViewController : UIViewController, UITextViewDelegate
             instance.createData(category: category, item: SectionItem(memoText: text, isSwitchOn: false))
             presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
         }
+        textContent.resignFirstResponder()
         NotificationCenter.default.post(name: .textChangeStatus, object: TextChangeCommitStatus.Success)
     }
 }
