@@ -35,6 +35,7 @@
 		5FE9555E2A98E8DB002B013E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE03C992A948A190099E297 /* Assets.xcassets */; };
 		5FE955692A98F0EE002B013E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5FE955682A98F0EE002B013E /* SnapKit */; };
 		5FE955952A9902E9002B013E /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = 5FE955942A9902E9002B013E /* NVActivityIndicatorView */; };
+		5FE9559E2A9910A2002B013E /* SwiftyGif in Frameworks */ = {isa = PBXBuildFile; productRef = 5FE9559D2A9910A2002B013E /* SwiftyGif */; };
 		5FF5FCEC2A97935800D9CA8A /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5FCEB2A97935800D9CA8A /* UITableView.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,7 @@
 			files = (
 				5FE955952A9902E9002B013E /* NVActivityIndicatorView in Frameworks */,
 				5FE955692A98F0EE002B013E /* SnapKit in Frameworks */,
+				5FE9559E2A9910A2002B013E /* SwiftyGif in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +220,7 @@
 			packageProductDependencies = (
 				5FE955682A98F0EE002B013E /* SnapKit */,
 				5FE955942A9902E9002B013E /* NVActivityIndicatorView */,
+				5FE9559D2A9910A2002B013E /* SwiftyGif */,
 			);
 			productName = Memo2;
 			productReference = 5FE03C8D2A948A180099E297 /* Memo2.app */;
@@ -250,6 +253,7 @@
 			packageReferences = (
 				5FE955672A98F0EE002B013E /* XCRemoteSwiftPackageReference "SnapKit" */,
 				5FE955932A9902E9002B013E /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
+				5FE9559C2A9910A2002B013E /* XCRemoteSwiftPackageReference "SwiftyGif" */,
 			);
 			productRefGroup = 5FE03C8E2A948A180099E297 /* Products */;
 			projectDirPath = "";
@@ -528,6 +532,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		5FE9559C2A9910A2002B013E /* XCRemoteSwiftPackageReference "SwiftyGif" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kirualex/SwiftyGif.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -540,6 +552,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5FE955932A9902E9002B013E /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
 			productName = NVActivityIndicatorView;
+		};
+		5FE9559D2A9910A2002B013E /* SwiftyGif */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FE9559C2A9910A2002B013E /* XCRemoteSwiftPackageReference "SwiftyGif" */;
+			productName = SwiftyGif;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
