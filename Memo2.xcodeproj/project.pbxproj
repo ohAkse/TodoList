@@ -31,9 +31,10 @@
 		5FE03CC62A94A8A10099E297 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03CC52A94A8A10099E297 /* UIButton.swift */; };
 		5FE03CC82A94CFB50099E297 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03CC72A94CFB50099E297 /* UILabel.swift */; };
 		5FE03CCB2A94ED820099E297 /* TodoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03CCA2A94ED820099E297 /* TodoListCell.swift */; };
-		5FE955142A98D493002B013E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5FE955132A98D493002B013E /* SnapKit */; };
 		5FE9555D2A98E81C002B013E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FE03C9B2A948A190099E297 /* LaunchScreen.storyboard */; };
 		5FE9555E2A98E8DB002B013E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FE03C992A948A190099E297 /* Assets.xcassets */; };
+		5FE955692A98F0EE002B013E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5FE955682A98F0EE002B013E /* SnapKit */; };
+		5FE955952A9902E9002B013E /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = 5FE955942A9902E9002B013E /* NVActivityIndicatorView */; };
 		5FF5FCEC2A97935800D9CA8A /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5FCEB2A97935800D9CA8A /* UITableView.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,7 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FE955142A98D493002B013E /* SnapKit in Frameworks */,
+				5FE955952A9902E9002B013E /* NVActivityIndicatorView in Frameworks */,
+				5FE955692A98F0EE002B013E /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,7 +216,8 @@
 			);
 			name = Memo2;
 			packageProductDependencies = (
-				5FE955132A98D493002B013E /* SnapKit */,
+				5FE955682A98F0EE002B013E /* SnapKit */,
+				5FE955942A9902E9002B013E /* NVActivityIndicatorView */,
 			);
 			productName = Memo2;
 			productReference = 5FE03C8D2A948A180099E297 /* Memo2.app */;
@@ -245,7 +248,8 @@
 			);
 			mainGroup = 5FE03C842A948A180099E297;
 			packageReferences = (
-				5FE955122A98D493002B013E /* XCRemoteSwiftPackageReference "SnapKit" */,
+				5FE955672A98F0EE002B013E /* XCRemoteSwiftPackageReference "SnapKit" */,
+				5FE955932A9902E9002B013E /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
 			);
 			productRefGroup = 5FE03C8E2A948A180099E297 /* Products */;
 			projectDirPath = "";
@@ -508,9 +512,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5FE955122A98D493002B013E /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		5FE955672A98F0EE002B013E /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		5FE955932A9902E9002B013E /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ninjaprox/NVActivityIndicatorView";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.0.0;
@@ -519,10 +531,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5FE955132A98D493002B013E /* SnapKit */ = {
+		5FE955682A98F0EE002B013E /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5FE955122A98D493002B013E /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 5FE955672A98F0EE002B013E /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		5FE955942A9902E9002B013E /* NVActivityIndicatorView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FE955932A9902E9002B013E /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
+			productName = NVActivityIndicatorView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
