@@ -16,6 +16,8 @@ class TodoListCell : UITableViewCell, UITextViewDelegate{
     lazy var textView: UITextView = {
         let textView = UITextView()
         textView.isScrollEnabled = false
+        textView.textContainer.lineBreakMode = .byTruncatingTail 
+        textView.textContainer.maximumNumberOfLines = 1
         textView.font = UIFont.systemFont(ofSize: cellFontSize)
         textView.tintColor = .clear
         textView.delegate = self
