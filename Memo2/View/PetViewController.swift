@@ -58,8 +58,8 @@ class PetViewController : UIViewController
         let catImageURL = "https://api.thecatapi.com/v1/images/search"
         
         do {
-            let dogImageResponse = try await instance.fetchRandomImageAsync(imageUrl: dogImageURL)
-            let catImageResponse = try await instance.fetchRandomImageAsync(imageUrl: catImageURL)
+            let dogImageResponse =  await instance.fetchRandomImageAsync(imageUrl: dogImageURL)
+            let catImageResponse =  await instance.fetchRandomImageAsync(imageUrl: catImageURL)
 
             switch (dogImageResponse, catImageResponse) {
             case (.success(let dogImage), .success(let catImage)):
@@ -75,9 +75,7 @@ class PetViewController : UIViewController
             default:
                 break
             }
-        } catch {
-            print("Error: \(error.localizedDescription)")
-        }
+        } 
     }
 
     func setupImages() {
