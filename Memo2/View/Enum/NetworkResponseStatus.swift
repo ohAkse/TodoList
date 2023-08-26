@@ -5,25 +5,11 @@
 //  Created by 박유경 on 2023/08/25.
 //
 
-import Foundation
-enum NetworkResponseStatus : Error {
-    case success
-    case error(error: String)
-    case unknown
+import UIKit
+enum NetworkResponseStatus<T> {
+    case success(T)
+    case error(String)
+    case unknown(String)
     case none
-    
-    var typeValue: String {
-        switch self {
-        case .success:
-            return "Success"
-        case .error(let error):
-            print("Error: \(error)")
-            return error
-        case .unknown:
-            return "Unknown"
-        case .none:
-            return ""
-        }
-    }
 }
 

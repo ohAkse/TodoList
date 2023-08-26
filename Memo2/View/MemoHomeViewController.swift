@@ -60,25 +60,37 @@ class MemoHomeViewController : UIViewController{
         }
         mainLoadingindicator.startAnimating()
     }
-    func setLogoImageView(){
-        
-        instance.getImage(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg"){ [weak self] image in
+    func setLogoImageView() {
+        instance.getImage(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg") { [weak self] imageResponse in
             guard let self = self else { return }
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                mainLoadingindicator.stopAnimating()
-                mainImageView.image = image
+            switch imageResponse {
+            case .success(let image):
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    mainLoadingindicator.stopAnimating()
+                    mainImageView.image = image
+                }
+            case .error(let errorMessage):
+                print("Error fetching image: \(errorMessage)")
+            default:
+                break
             }
         }
     }
-    
     func setupLogoImageViewAsync() async {
         do {
-            let image =  await instance.getImageAsync(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg")
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                mainLoadingindicator.stopAnimating()
-                mainImageView.image = image
+            let imageResponse = await instance.getImageAsync(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg")
+            switch imageResponse {
+            case .success(let image):
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    mainLoadingindicator.stopAnimating()
+                    mainImageView.image = image
+                }
+            case .error(let errorMessage):
+                print("Error fetching image: \(errorMessage)")
+            default:
+                break
             }
         }
     }

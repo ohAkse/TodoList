@@ -58,41 +58,63 @@ class PetViewController : UIViewController
         let catImageURL = "https://api.thecatapi.com/v1/images/search"
         
         do {
-            let dogImage = try await instance.fetchRandomImageAsync(imageUrl: dogImageURL)
-            let catImage = try await instance.fetchRandomImageAsync(imageUrl: catImageURL)
-            
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                dogLoadingindicator.stopAnimating()
-                dogImageView.image = dogImage
-                catLoadingindicator.stopAnimating()
-                catImageView.image = catImage
+            let dogImageResponse = try await instance.fetchRandomImageAsync(imageUrl: dogImageURL)
+            let catImageResponse = try await instance.fetchRandomImageAsync(imageUrl: catImageURL)
+
+            switch (dogImageResponse, catImageResponse) {
+            case (.success(let dogImage), .success(let catImage)):
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.dogLoadingindicator.stopAnimating()
+                    self.dogImageView.image = dogImage
+                    self.catLoadingindicator.stopAnimating()
+                    self.catImageView.image = catImage
+                }
+            case (.error(let dogError), .error(let catError)):
+                print("Dog Error: \(dogError), Cat Error: \(catError)")
+            default:
+                break
             }
         } catch {
             print("Error: \(error.localizedDescription)")
         }
     }
+
     func setupImages() {
         let dogImageURL = "https://api.thedogapi.com/v1/images/search"
         let catImageURL = "https://api.thecatapi.com/v1/images/search"
         let group = DispatchGroup()
         group.enter()
-        instance.fetchRandomImage(imageUrl: dogImageURL) { [weak self] dogImage in
+        instance.fetchRandomImage(imageUrl: dogImageURL) { [weak self] dogImageResponse in
             guard let self = self else { return }
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                dogLoadingindicator.stopAnimating()
-                dogImageView.image = dogImage
+                guard let self = self else {return}
+                switch dogImageResponse {
+                case .success(let dogImage):
+                    dogLoadingindicator.stopAnimating()
+                    dogImageView.image = dogImage
+                case .error(let errorMessage):
+                    print("Dog Image Error: \(errorMessage)")
+                default :
+                    break
+                }
                 group.leave()
             }
         }
         group.enter()
-        instance.fetchRandomImage(imageUrl: catImageURL) { [weak self] catImage in
+        instance.fetchRandomImage(imageUrl: catImageURL) { [weak self] catImageResponse in
             guard let self = self else { return }
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                catLoadingindicator.stopAnimating()
-                catImageView.image = catImage
+                guard let self = self else {return}
+                switch catImageResponse {
+                case .success(let catImage):
+                    catLoadingindicator.stopAnimating()
+                    catImageView.image = catImage
+                case .error(let errorMessage):
+                    print("Cat Image Error: \(errorMessage)")
+                default :
+                    break
+                }
                 group.leave()
             }
         }
