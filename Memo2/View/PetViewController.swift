@@ -46,6 +46,9 @@ class PetViewController : UIViewController
         if #available(iOS 16, *) {
             Task{
                 await setupImagesAsync()
+                //await MainActor.run{
+                //    setupImages()
+                //}
             }
         }else{
             setupImages()
@@ -56,66 +59,80 @@ class PetViewController : UIViewController
     func setupImagesAsync() async {
         let dogImageURL = "https://api.thedogapi.com/v1/images/search"
         let catImageURL = "https://api.thecatapi.com/v1/images/search"
-        
-        do {
-            let dogImageResponse =  await instance.fetchRandomImageAsync(imageUrl: dogImageURL)
-            let catImageResponse =  await instance.fetchRandomImageAsync(imageUrl: catImageURL)
-
-            switch (dogImageResponse, catImageResponse) {
-            case (.success(let dogImage), .success(let catImage)):
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    self.dogLoadingindicator.stopAnimating()
-                    self.dogImageView.image = dogImage
-                    self.catLoadingindicator.stopAnimating()
-                    self.catImageView.image = catImage
-                }
-            case (.error(let dogError), .error(let catError)):
-                print("Dog Error: \(dogError), Cat Error: \(catError)")
-            default:
-                break
+        let dogImageTask = Task {
+            let dogImageResponse = await instance.fetchRandomImageAsync(imageUrl: dogImageURL)
+            return dogImageResponse
+        }
+        let catImageTask = Task {
+            let catImageResponse = await instance.fetchRandomImageAsync(imageUrl: catImageURL)
+            return catImageResponse
+        }
+        let (dogImageResponse, catImageResponse) =  await (dogImageTask.value, catImageTask.value)
+        switch (dogImageResponse, catImageResponse) {
+        case (.success(let dogImage), .success(let catImage)):
+            DispatchQueue.main.async {[weak self] in
+                guard let self = self else {return}
+                dogLoadingindicator.stopAnimating()
+                dogImageView.image = dogImage
+                catLoadingindicator.stopAnimating()
+                catImageView.image = catImage
             }
-        } 
+        case (.error(let dogError), .error(let catError)):
+            print("Dog Error: \(dogError), Cat Error: \(catError)")
+        default:
+            break
+        }
     }
-
+    
     func setupImages() {
         let dogImageURL = "https://api.thedogapi.com/v1/images/search"
         let catImageURL = "https://api.thecatapi.com/v1/images/search"
         let group = DispatchGroup()
+        
         group.enter()
-        instance.fetchRandomImage(imageUrl: dogImageURL) { [weak self] dogImageResponse in
+        DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else {return}
+            instance.fetchRandomImage(imageUrl: dogImageURL) { [weak self] dogImageResponse in
+                guard let self = self else { return }
                 switch dogImageResponse {
                 case .success(let dogImage):
-                    dogLoadingindicator.stopAnimating()
-                    dogImageView.image = dogImage
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        dogLoadingindicator.stopAnimating()
+                        dogImageView.image = dogImage
+                        group.leave()
+                    }
                 case .error(let errorMessage):
                     print("Dog Image Error: \(errorMessage)")
-                default :
+                    group.leave()
+                default:
                     break
                 }
-                group.leave()
             }
         }
+        
         group.enter()
-        instance.fetchRandomImage(imageUrl: catImageURL) { [weak self] catImageResponse in
+        DispatchQueue.global().async { [weak self ] in
             guard let self = self else { return }
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else {return}
+            instance.fetchRandomImage(imageUrl: catImageURL) { [weak self] catImageResponse in
+                guard let self = self else { return }
                 switch catImageResponse {
                 case .success(let catImage):
-                    catLoadingindicator.stopAnimating()
-                    catImageView.image = catImage
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        catLoadingindicator.stopAnimating()
+                        catImageView.image = catImage
+                        group.leave()
+                    }
                 case .error(let errorMessage):
                     print("Cat Image Error: \(errorMessage)")
-                default :
+                    group.leave()
+                default:
                     break
                 }
-                group.leave()
             }
         }
+ 
     }
     
     func setupSubviews(){
