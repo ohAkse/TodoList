@@ -140,7 +140,7 @@ final class NetworkManager{
                         if let data = data, let image = UIImage(data: data) {
                             completion(.success(image))
                         } else {
-                            completion(.error(.decodingImage("Failed to Decoding")))
+                            completion(.error(.decodingImage("Failed to decode Image")))
                         }
                     }else{
                         //성공은 했지만 상황에 따라 안되는 코드에 따른 추가 로직 구성
