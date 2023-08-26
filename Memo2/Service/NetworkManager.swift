@@ -9,139 +9,152 @@ import Foundation
 import UIKit
 final class NetworkManager{
     static let instance = NetworkManager()
-    func fetchRandomImageAsync(imageUrl: String) async throws -> UIImage {
+    func fetchRandomImageAsync(imageUrl: String) async  -> NetworkResponseStatus<UIImage> {
         let session = URLSession(configuration: .default)
-        let (data, response) = try await session.data(from: URL(string: imageUrl)!) // URLResponse는 별 쓸모없는거같음
-        if let response = response as? HTTPURLResponse {
-            switch response.statusCode {
-            case 200..<300:
-                do {
-                    let decoder = JSONDecoder()
-                    let cats = try decoder.decode([Animal].self, from: data)
-                    let imageUrl = cats[0].url
-                    return await getImageAsync(imageUrl: imageUrl)
-                } catch {
-                    print("Error decoding JSON: \(error)")
+        do {
+            let (data, response) = try await session.data(from: URL(string: imageUrl)!)
+            if let httpResponse = response as? HTTPURLResponse {
+                switch httpResponse.statusCode {
+                case 200..<300:
+                    if httpResponse.statusCode == 200{
+                        let decoder = JSONDecoder()
+                        let animal = try decoder.decode([Animal].self, from: data)
+                        let imageUrl = animal[0].url
+                        let imageResponse = await getImageAsync(imageUrl: imageUrl)
+                        return imageResponse
+                    }else{
+                        //성공은 했지만 상황에 따라 안되는 코드에 따른 추가 로직 구성
+                    }
+                case 300..<400:
+                    return .error(.statusCode(.redirection(httpResponse.statusCode)))
+                case 400..<500:
+                    return .error(.statusCode(.clientError(httpResponse.statusCode)))
+                default:
+                    return .error(.unknown("Network Error"))
                 }
-            case 300..<400:
-                print("300번대 에러 -> \(response.statusCode)")
-            case 400..<500:
-                print("400번대 에러 -> \(response.statusCode)")
-            default:
-                print("Unknown Error")
             }
+        } catch {
+            return .error(.decodingJSON("Failed to decdoing Json"))
         }
-        return UIImage()
+        return .error(.wrongUrL("Wrong URL!"))
     }
     
-    func getImageAsync(imageUrl: String) async -> UIImage {
+    
+    func getImageAsync(imageUrl: String) async-> NetworkResponseStatus<UIImage> {
         if let imageUrl = URL(string: imageUrl) {
             do {
                 let (data, response) = try await URLSession.shared.data(from: imageUrl)
-                
-                if let response = response as? HTTPURLResponse {
-                    switch response.statusCode {
+                if let httpResponse = response as? HTTPURLResponse {
+                    switch httpResponse.statusCode {
                     case 200..<300:
-                        if let image = UIImage(data: data) {
-                            return image
-                        } else {
-                            return UIImage()
+                        if httpResponse.statusCode == 200{
+                            if let image = UIImage(data: data) {
+                                return .success(image)
+                            } else {
+                                return .error(.decodingImage("Failed to load Image"))
+                            }
+                        }else{
+                            //성공은 했지만 상황에 따라 안되는 코드에 따른 추가 로직 구성
                         }
                     case 300..<400:
-                        print("300번대 에러 -> \(response.statusCode)")
-                        
+                        return .error(.statusCode(.redirection(httpResponse.statusCode)))
                     case 400..<500:
-                        print("400번대 에러 -> \(response.statusCode)")
+                        return .error(.statusCode(.clientError(httpResponse.statusCode)))
                     default:
-                        print("Unknown Error")
+                        return .error(.unknown("Network Error"))
                     }
                 }
             } catch {
-                print("Error: \(error.localizedDescription)")
+                return .error(.unknown("Network Error"))
             }
         }
-        return UIImage()
+        return .error(.wrongUrL("Wrong URL!"))
     }
     
-    func fetchRandomImage(imageUrl: String, completion: @escaping (UIImage?) -> Void) {
-        if let imageUrl = URL(string: imageUrl) {
-            let session = URLSession(configuration: .default)
-            let task = session.dataTask(with: imageUrl) { [weak self](data, response, error) in
-                guard let self = self else {return}
-                if let error = error {
-                    print("Error: \(error.localizedDescription)")
-                    completion(nil)
-                    return
-                }
-                if let httpResponse = response as? HTTPURLResponse {
-                    switch httpResponse.statusCode {
-                    case 200..<300:
+    func fetchRandomImage(imageUrl: String, completion: @escaping (NetworkResponseStatus<UIImage>) -> Void) {
+        guard let imageURL = URL(string: imageUrl) else {
+            completion(.error(.wrongUrL("Wrong URL!")))
+            return
+        }
+        let session = URLSession(configuration: .default)
+        let task = session.dataTask(with: imageURL) { [weak self] (data, response, error) in
+            guard let self = self else { return }
+
+            if let error = error {
+                completion(.error(.unknown(error.localizedDescription)))
+                return
+            }
+            if let httpResponse = response as? HTTPURLResponse {
+                switch httpResponse.statusCode {
+                case 200..<300:
+                    if httpResponse.statusCode == 200
+                    {
                         do {
                             let decoder = JSONDecoder()
-                            let cats = try decoder.decode([Animal].self, from: data!)
-                            let imageUrl = cats[0].url
-                            getImage(imageUrl: imageUrl) { image in
-                                completion(image)
+                            let animal = try decoder.decode([Animal].self, from: data!)
+                            let imageUrl = animal[0].url
+                            getImage(imageUrl: imageUrl) { imageResponse in
+                                switch imageResponse {
+                                case .success(let image):
+                                    completion(.success(image))
+                                default :
+                                    completion(.unknown("Failed to load Image"))
+                                }
                             }
                         } catch {
-                            print("Error decoding JSON: \(error)")
-                            completion(nil)
+                            completion(.error(.decodingJSON("Failed to decode JSON")))
                         }
-                    case 300..<400:
-                        print("300번대 에러 -> \(httpResponse.statusCode)")
-                        completion(nil)
-                    case 400..<500:
-                        print("400번대 에러 -> \(httpResponse.statusCode)")
-                        completion(nil)
-                    default:
-                        print("Unknown Error")
-                        completion(nil)
+                    }else{
+                        //성공은 했지만 상황에 따라 안되는 코드에 따른 추가 로직 구성
                     }
-                } else {
-                    completion(nil)
+                case 300..<400:
+                    completion(.error(.statusCode(.redirection(httpResponse.statusCode))))
+                case 400..<500:
+                    completion(.error(.statusCode(.clientError(httpResponse.statusCode))))
+                default:
+                    completion(.error(.unknown("Netowrk Error")))//어떤 경우에 default로 빠지는지 감이 안잡혀서 이렇게 설정
                 }
             }
-            task.resume()
-        } else {
-            completion(nil)
         }
+        task.resume()
     }
-    func getImage(imageUrl: String, completion: @escaping (UIImage?) -> Void) {
-        if let imageUrl = URL(string: imageUrl) {
-            let session = URLSession(configuration: .default)
-            let task = session.dataTask(with: imageUrl) { [weak self ](data, response, error) in
-                guard let self = self else {return}
-                if let error = error {
-                    print("Error: \(error.localizedDescription)")
-                    completion(nil)
-                    return
-                }
-                if let httpResponse = response as? HTTPURLResponse {
-                    switch httpResponse.statusCode {
-                    case 200..<300:
+    
+    func getImage(imageUrl: String, completion: @escaping (NetworkResponseStatus<UIImage>) -> Void) {
+        guard let imageURL = URL(string: imageUrl) else {
+            completion(.error(.wrongUrL("Wrong URL!")))
+            return
+        }
+
+        let session = URLSession(configuration: .default)
+        let task = session.dataTask(with: imageURL) { (data, response, error) in
+            if let error = error {
+                completion(.error(.unknown("Unknown : \(error.localizedDescription)")))
+                return
+            }
+
+            if let httpResponse = response as? HTTPURLResponse {
+                switch httpResponse.statusCode {
+                case 200..<300 :
+                    if httpResponse.statusCode == 200
+                    {
                         if let data = data, let image = UIImage(data: data) {
-                            completion(image)
+                            completion(.success(image))
                         } else {
-                            completion(nil)
+                            completion(.error(.decodingImage("Failed to decode Image")))
                         }
-                    case 300..<400:
-                        print("300번대 에러 -> \(httpResponse.statusCode)")
-                        completion(nil)
-                    case 400..<500:
-                        print("400번대 에러 -> \(httpResponse.statusCode)")
-                        completion(nil)
-                    default:
-                        print("Unknown Error")
-                        completion(nil)
+                    }else{
+                        //성공은 했지만 상황에 따라 안되는 코드에 따른 추가 로직 구성
                     }
-                } else {
-                    completion(nil)
+                case 300..<400:
+                    completion(.error(.statusCode(.redirection(httpResponse.statusCode))))
+                case 400..<500:
+                    completion(.error(.statusCode(.clientError(httpResponse.statusCode))))
+                default:
+                    completion(.error(.unknown("Netowrk Error")))//어떤 경우에 default로 빠지는지 감이 안잡혀서 이렇게 설정
                 }
             }
-            task.resume()
-        } else {
-            completion(nil)
         }
+        task.resume()
     }
 }
 
