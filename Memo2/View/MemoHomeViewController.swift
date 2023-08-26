@@ -48,12 +48,15 @@ class MemoHomeViewController : UIViewController{
         color: .black,
         padding: 0
     )
-
+    
     let instance = NetworkManager.instance
     override func viewDidAppear(_ animated: Bool) {
         if #available(iOS 16.0, *) {
             Task{
                 await setupLogoImageViewAsync()
+               //await MainActor.run{
+                   //setLogoImageView()
+               //}
             }
         }else{
             setLogoImageView()
@@ -61,36 +64,41 @@ class MemoHomeViewController : UIViewController{
         mainLoadingindicator.startAnimating()
     }
     func setLogoImageView() {
-        instance.getImage(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg") { [weak self] imageResponse in
-            guard let self = self else { return }
-            switch imageResponse {
-            case .success(let image):
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    mainLoadingindicator.stopAnimating()
-                    mainImageView.image = image
+        DispatchQueue.global().async{[weak self] in
+            guard let self = self else{return}
+            instance.getImage(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg") { [weak self] imageResponse in
+                guard let self = self else { return }
+                switch imageResponse {
+                case .success(let image):
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        mainLoadingindicator.stopAnimating()
+                        mainImageView.image = image
+                    }
+                case .error(let errorMessage):
+                    print("Error fetching image: \(errorMessage)")
+                default:
+                    break
                 }
-            case .error(let errorMessage):
-                print("Error fetching image: \(errorMessage)")
-            default:
-                break
             }
         }
     }
     func setupLogoImageViewAsync() async {
-        do {
-            let imageResponse = await instance.getImageAsync(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg")
-            switch imageResponse {
-            case .success(let image):
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    mainLoadingindicator.stopAnimating()
-                    mainImageView.image = image
+        Task{
+            do {
+                let imageResponse = await instance.getImageAsync(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg")
+                switch imageResponse {
+                case .success(let image):
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        mainLoadingindicator.stopAnimating()
+                        mainImageView.image = image
+                    }
+                case .error(let errorMessage):
+                    print("Error fetching image: \(errorMessage)")
+                default:
+                    break
                 }
-            case .error(let errorMessage):
-                print("Error fetching image: \(errorMessage)")
-            default:
-                break
             }
         }
     }
