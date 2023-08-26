@@ -5,25 +5,25 @@
 //  Created by 박유경 on 2023/08/25.
 //
 
-import Foundation
-enum NetworkResponseStatus : Error {
-    case success
-    case error(error: String)
-    case unknown
+import UIKit
+enum NetworkResponseStatus<T> {
+    case success(T)
+    case error(NetworkError)
+    case unknown(String)
     case none
+}
+enum NetworkError: Error {
+    case decodingJSON(String)
+    case decodingImage(String)
+    case statusCode(HTTPStatusCode)
+    case unknown(String)
+    case wrongUrL(String)
     
-    var typeValue: String {
-        switch self {
-        case .success:
-            return "Success"
-        case .error(let error):
-            print("Error: \(error)")
-            return error
-        case .unknown:
-            return "Unknown"
-        case .none:
-            return ""
-        }
+    enum HTTPStatusCode {
+        case success
+        case redirection(Int)
+        case clientError(Int)
+        case serverError(Int)
+        case unknown(Int)
     }
 }
-

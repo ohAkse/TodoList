@@ -97,6 +97,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TodoListCell") as? TodoListCell else {
             return UITableViewCell()
         }
+        
         let category = categories[indexPath.section]
         let sectionItem = category.items[indexPath.row]
         
@@ -146,7 +147,6 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 class MemoListViewController : UIViewController{
-    //컴포넌트
     lazy var tableView : UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.setupCustomTableviewUI()
@@ -155,10 +155,10 @@ class MemoListViewController : UIViewController{
         return tableView
     }()
     
-    //프로퍼티
     private let instance = LocalDBManager.instance
     private var uncompletedItemListCount = 0
     private var categories : [Category] = []
+    
     deinit{
         print("MemoListViewController deinit called")
     }
