@@ -11,6 +11,13 @@
 
 4)추가과제 기능 구현 중 thedog(cat)api를 사용하였는데 받아오는 사진 형식이 간혈적으로 gif인 경우가 있어 못받아오는 경우가 있습니다. gif로 받아왔을때 처리나,이미지 로드 실패했을 때 retry하는 로직 추가, Fail Image 변경 등은 추가하지 않았으며 **로딩바가 계속 나올 시 뒤로가기 했다가 다시 들어갈 경우 정상적으로 이미지 로드 되는것을 확인**하실 수 있습니다.
 
+
+## 사용한 기술 스택 (Tech Stack)
+개발언어 언어 : 
+<img src="https://img.shields.io/badge/Swift-F05138?style=for-the-badge&logo=Swift&logoColor=white">   
+사용 기술 :  <img src="https://img.shields.io/badge/async/await-E60012?style=for-the-badge&logo=asciidoctor&logoColor=white"><img src="https://img.shields.io/badge/URLSession-6332F6?style=for-the-badge&logo=asciidoctor&logoColor=white"><img src="https://img.shields.io/badge/userdefaults-58B7FE?style=for-the-badge&logo=asciidoctor&logoColor=white"><img src="https://img.shields.io/badge/GCD(Group)-A9225C?style=for-the-badge&logo=asciidoctor&logoColor=white">  
+외부라이브러리 모듈 : <img src="https://img.shields.io/badge/NVActivityIndicatorView-00CEC8?style=for-the-badge&logo=spreadshirt&logoColor=white"><img src="https://img.shields.io/badge/Snapkit-6264A7?style=for-the-badge&logo=snapcraft&logoColor=white">
+
 # **프로젝트 간단 소개**
 
 **Model**: 프로젝트에서 데이터를 다루는 모델은 TodoList와 관련된 데이터를 다루는 Memo구조체를 관리하여 userdefault로 변경사항을 추가, 삭제, 저장 등을 다루는 LocalDBManager와 thedogapi를 다루는 animal 구조체를 이용 및 네트워크 통신을 관리하는 NetworkManager로 이루어져 있습니다.
