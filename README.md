@@ -12,10 +12,10 @@
 4)추가과제 기능 구현 중 thedog(cat)api를 사용하였는데 받아오는 사진 형식이 간혈적으로 gif인 경우가 있어 못받아오는 경우가 있습니다. gif로 받아왔을때 처리나,이미지 로드 실패했을 때 retry하는 로직 추가, Fail Image 변경 등은 추가하지 않았으며 **로딩바가 계속 나올 시 뒤로가기 했다가 다시 들어갈 경우 정상적으로 이미지 로드 되는것을 확인**하실 수 있습니다.
 
 
-## 사용한 기술 스택 (Tech Stack)
-개발언어 언어 : 
+# 개발언어 및 모듈
+개발언어 : 
 <img src="https://img.shields.io/badge/Swift-F05138?style=for-the-badge&logo=Swift&logoColor=white">   
-사용 기술 :  <img src="https://img.shields.io/badge/async/await-E60012?style=for-the-badge&logo=asciidoctor&logoColor=white"><img src="https://img.shields.io/badge/URLSession-6332F6?style=for-the-badge&logo=asciidoctor&logoColor=white"><img src="https://img.shields.io/badge/userdefaults-58B7FE?style=for-the-badge&logo=asciidoctor&logoColor=white"><img src="https://img.shields.io/badge/GCD(Group)-A9225C?style=for-the-badge&logo=asciidoctor&logoColor=white">  
+사용 기술 :  <img src="https://img.shields.io/badge/async/await-E60012?style=for-the-badge&logo=asciidoctor&logoColor=white"><img src="https://img.shields.io/badge/URLSession-6332F6?style=for-the-badge&logo=asciidoctor&logoColor=white"><img src="https://img.shields.io/badge/userdefaults-58B7FE?style=for-the-badge&logo=asciidoctor&logoColor=white"><img src="https://img.shields.io/badge/GCD-A9225C?style=for-the-badge&logo=asciidoctor&logoColor=white">  
 외부라이브러리 모듈 : <img src="https://img.shields.io/badge/NVActivityIndicatorView-00CEC8?style=for-the-badge&logo=spreadshirt&logoColor=white"><img src="https://img.shields.io/badge/Snapkit-6264A7?style=for-the-badge&logo=snapcraft&logoColor=white">
 
 # **프로젝트 간단 소개**
@@ -60,6 +60,3 @@ PetViewController : 추가과제를 보여주기 위한 화면으로써, API를 
 
 4)**HttpresponseStatus** : 추가기능 구현중 API 통신 중 예외처리 추가 기능 구현이 있어 시도를 해보았지만, 웹쪽 도메인 지식이 많지 않아 최대한 의미에 맞게 분기처리를하여 로그를 남기도록 하였지만 불명확한 부분이 있을 수 있습니다. 
 
-
-
-*추가 사항 및 누락된 내용은 8.31일까지 추가적으로 변경예정*
