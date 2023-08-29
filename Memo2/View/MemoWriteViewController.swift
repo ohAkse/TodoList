@@ -33,7 +33,6 @@ class MemoWriteViewController : UIViewController, UITextViewDelegate
     }()
     var category : String = ""
     var originText : String = ""
-    let instance = LocalDBManager.instance
     var selectedItem : SectionItem?
     
     deinit{
@@ -47,15 +46,32 @@ class MemoWriteViewController : UIViewController, UITextViewDelegate
         view.backgroundColor = .white
         setupSubviews()
         setupLayout()
+        setupBind()
         originText = textContent.text
     }
+    let viewModel = MemoWriteViewViewModel()
     
+    func setupBind(){
+        viewModel.confirmAction = { [weak self] (category, bsuccess) in
+            guard let self = self else {return}
+            if bsuccess == false{
+                showAlert(title: "에러", message: "내용을 추가해주세요")
+            }else{
+                if category.typeValue == "할일 수정"
+                {
+                    dismiss(animated: true)
+                }else{
+                    presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                }
+                NotificationCenter.default.post(name: .textChangeStatus, object: TextChangeCommitStatus.Success)
+            }
+        }
+    }
     func setupSubviews(){
         view.addSubview(titleLabel)
         view.addSubview(textContent)
         view.addSubview(confirmButton)
     }
-    
     func setupLayout() {
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -78,18 +94,10 @@ class MemoWriteViewController : UIViewController, UITextViewDelegate
         }
     }
     @objc func confirmButtonTapped() {
-        guard let text = textContent.text, !text.isEmpty else {
-            showAlert(title: "에러", message: "내용을 추가해주세요")
-            return
-        }
         if titleLabel.text == UISheetPaperType.update.typeValue {
-            instance.updateData(category: category, originText: originText, changeText: text)
-            self.dismiss(animated: true)
+            viewModel.onUpdateText(category: category, originText: originText, changeText: textContent.text)
         } else {
-            instance.createData(category: category, item: SectionItem(memoText: text, isSwitchOn: false))
-            presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+            viewModel.onCreateData(category: category, item: SectionItem(memoText: textContent.text, isSwitchOn: false))
         }
-        textContent.resignFirstResponder()
-        NotificationCenter.default.post(name: .textChangeStatus, object: TextChangeCommitStatus.Success)
     }
 }

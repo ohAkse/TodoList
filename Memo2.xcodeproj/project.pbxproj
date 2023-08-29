@@ -10,6 +10,10 @@
 		5F14B90E2A9DBB8D007565D0 /* MemoHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B90D2A9DBB8D007565D0 /* MemoHomeViewModel.swift */; };
 		5F14B9102A9DCA74007565D0 /* PetViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B90F2A9DCA74007565D0 /* PetViewViewModel.swift */; };
 		5F14B9122A9DE898007565D0 /* MemoCompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B9112A9DE898007565D0 /* MemoCompleteViewModel.swift */; };
+		5F14B9142A9E0614007565D0 /* MemoListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B9132A9E0614007565D0 /* MemoListViewViewModel.swift */; };
+		5F14B9182A9E07ED007565D0 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B9172A9E07ED007565D0 /* Observable.swift */; };
+		5F14B91A2A9E262C007565D0 /* MemoCategoryViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B9192A9E262C007565D0 /* MemoCategoryViewViewModel.swift */; };
+		5F14B91C2A9E2994007565D0 /* MemoWriteViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B91B2A9E2994007565D0 /* MemoWriteViewViewModel.swift */; };
 		5F25E9902A9889D600668C32 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F25E98F2A9889D600668C32 /* NetworkManager.swift */; };
 		5F25E9962A988CB300668C32 /* PetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F25E9952A988CB300668C32 /* PetViewController.swift */; };
 		5F25E9982A989B4300668C32 /* NetworkResponseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F25E9972A989B4300668C32 /* NetworkResponseStatus.swift */; };
@@ -45,6 +49,10 @@
 		5F14B90D2A9DBB8D007565D0 /* MemoHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoHomeViewModel.swift; sourceTree = "<group>"; };
 		5F14B90F2A9DCA74007565D0 /* PetViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewViewModel.swift; sourceTree = "<group>"; };
 		5F14B9112A9DE898007565D0 /* MemoCompleteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoCompleteViewModel.swift; sourceTree = "<group>"; };
+		5F14B9132A9E0614007565D0 /* MemoListViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewViewModel.swift; sourceTree = "<group>"; };
+		5F14B9172A9E07ED007565D0 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		5F14B9192A9E262C007565D0 /* MemoCategoryViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoCategoryViewViewModel.swift; sourceTree = "<group>"; };
+		5F14B91B2A9E2994007565D0 /* MemoWriteViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoWriteViewViewModel.swift; sourceTree = "<group>"; };
 		5F25E98F2A9889D600668C32 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		5F25E9952A988CB300668C32 /* PetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewController.swift; sourceTree = "<group>"; };
 		5F25E9972A989B4300668C32 /* NetworkResponseStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponseStatus.swift; sourceTree = "<group>"; };
@@ -96,6 +104,9 @@
 				5F14B90D2A9DBB8D007565D0 /* MemoHomeViewModel.swift */,
 				5F14B90F2A9DCA74007565D0 /* PetViewViewModel.swift */,
 				5F14B9112A9DE898007565D0 /* MemoCompleteViewModel.swift */,
+				5F14B9132A9E0614007565D0 /* MemoListViewViewModel.swift */,
+				5F14B9192A9E262C007565D0 /* MemoCategoryViewViewModel.swift */,
+				5F14B91B2A9E2994007565D0 /* MemoWriteViewViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -157,6 +168,7 @@
 				5FE03C992A948A190099E297 /* Assets.xcassets */,
 				5FE03C9B2A948A190099E297 /* LaunchScreen.storyboard */,
 				5FE03C9E2A948A190099E297 /* Info.plist */,
+				5F14B9172A9E07ED007565D0 /* Observable.swift */,
 			);
 			path = Memo2;
 			sourceTree = "<group>";
@@ -305,15 +317,19 @@
 				5FE03CAE2A948C700099E297 /* Memo.swift in Sources */,
 				5F14B90E2A9DBB8D007565D0 /* MemoHomeViewModel.swift in Sources */,
 				5F68322E2A964003008B3EB7 /* UISheetPaperType.swift in Sources */,
+				5F14B9142A9E0614007565D0 /* MemoListViewViewModel.swift in Sources */,
+				5F14B91A2A9E262C007565D0 /* MemoCategoryViewViewModel.swift in Sources */,
 				5FE03CA62A948B4D0099E297 /* Date.swift in Sources */,
 				5F6832252A95CE3B008B3EB7 /* MemoCategoryViewController.swift in Sources */,
 				5F14B9122A9DE898007565D0 /* MemoCompleteViewModel.swift in Sources */,
 				5F828CE52A964E70004EBCF0 /* LocalDBManager.swift in Sources */,
+				5F14B9182A9E07ED007565D0 /* Observable.swift in Sources */,
 				5F25E9962A988CB300668C32 /* PetViewController.swift in Sources */,
 				5FE03CB02A9490960099E297 /* MemoListViewController.swift in Sources */,
 				5FE03CA82A948B5C0099E297 /* UIViewController.swift in Sources */,
 				5F25E99A2A98B1E600668C32 /* Animal.swift in Sources */,
 				5FE03CCB2A94ED820099E297 /* TodoListCell.swift in Sources */,
+				5F14B91C2A9E2994007565D0 /* MemoWriteViewViewModel.swift in Sources */,
 				5FE03CC62A94A8A10099E297 /* UIButton.swift in Sources */,
 				5FE03CB62A9490ED0099E297 /* MemoCompleteViewController.swift in Sources */,
 				5FE03CC82A94CFB50099E297 /* UILabel.swift in Sources */,

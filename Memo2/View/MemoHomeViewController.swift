@@ -161,14 +161,13 @@ class MemoHomeViewController : UIViewController{
         }
     }
     @objc func moveToAnimalButtonTapped(){
-        viewModel.moveToPetAction?()
+        viewModel.onMoveToPet()
     }
-    
     @objc func moveToListButtonTapped(){
-        viewModel.moveToListAction?()
+        viewModel.onMoveToList()
     }
     @objc func moveToCompletsButtonTapped(){
-        viewModel.moveToCompleteAction?()
+        viewModel.onMoveToComplete()
     }
 }
 

@@ -14,13 +14,13 @@ class MemoHomeViewModel{
     var mainImage : UIImage?
     let instance = NetworkManager.instance
     
-    func moveToList(){
+    func onMoveToList(){
         self.moveToListAction?()
     }
-    func moveToComplete(){
+    func onMoveToComplete(){
         self.moveToCompleteAction?()
     }
-    func moveToPet(){
+    func onMoveToPet(){
         self.moveToPetAction?()
     }
     
