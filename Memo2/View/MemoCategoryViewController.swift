@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MemoCategoryViewController : UIViewController
+class MemoCategoryViewController : UIViewController, ViewModelBindableType
 {
     lazy var titleLabel : UILabel = {
         let label = UILabel()
@@ -48,11 +48,8 @@ class MemoCategoryViewController : UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupSubviews()
-        setupLayout()
-        setupBind()
     }
-    var viewModel = MemoCategoryViewModel()
+    var viewModel : MemoCategoryViewModel!
     
     func setupBind(){
         viewModel.workoutButtonAction = { [weak self] in
@@ -104,7 +101,8 @@ class MemoCategoryViewController : UIViewController
     }
     func moveMemoWriteViewController(categoryType : CategoryType)
     {
-        let memoWriteVC = MemoWriteViewController()
+        var memoWriteVC = MemoWriteViewController()
+        memoWriteVC.bind(viewModel: MemoWriteViewViewModel())
         if let presentationController = memoWriteVC.presentationController as? UISheetPresentationController {
             presentationController.detents = [
                 .medium(),

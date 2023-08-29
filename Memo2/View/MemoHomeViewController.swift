@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 import NVActivityIndicatorView
-class MemoHomeViewController : UIViewController{
+class MemoHomeViewController : UIViewController, ViewModelBindableType{
     
     lazy var mainImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: ""))
@@ -54,34 +54,34 @@ class MemoHomeViewController : UIViewController{
         super.viewDidAppear(true)
     }
     
-    var viewModel = MemoHomeViewModel()
+    var viewModel : MemoHomeViewModel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSubviews()
-        setupLayout()
-        setupBind()
         mainLoadingindicator.startAnimating()
     }
     func setupBind(){
         viewModel.moveToListAction = { [weak self] in
             guard let self = self else { return }
-            let memoListVC = MemoListViewController()
+            var memoListVC = MemoListViewController()
+            memoListVC.bind(viewModel: MemoListViewViewModel())
             UIView.transition(with: self.navigationController!.view, duration: 0.5, options: .transitionFlipFromBottom, animations: {
                 self.navigationController?.pushViewController(memoListVC, animated: false)
             }, completion: nil)
         }
         viewModel.moveToCompleteAction = { [weak self] in
             guard let self = self else { return }
-            let memoListVC = MemoCompleteViewController()
+            var memoListVC = MemoCompleteViewController()
+            memoListVC.bind(viewModel: MemoCompleteViewModel())
             present(memoListVC, animated: true, completion: nil)
         }
         
         viewModel.moveToPetAction = { [weak self] in
             guard let self = self else { return }
-                    let petViewController = PetViewController()
-                    UIView.transition(with: navigationController!.view, duration: 0.5, options: .transitionFlipFromTop, animations: {
-                        self.navigationController?.pushViewController(petViewController, animated: false)
-                    }, completion: nil)
+            var petViewController = PetViewController()
+            petViewController.bind(viewModel: PetViewViewModel())
+            UIView.transition(with: navigationController!.view, duration: 0.5, options: .transitionFlipFromTop, animations: {
+                self.navigationController?.pushViewController(petViewController, animated: false)
+            }, completion: nil)
         }
         if #available(iOS 16.0, *)
         {
@@ -118,7 +118,7 @@ class MemoHomeViewController : UIViewController{
             }
         }
     }
-        
+    
     
     func setupSubviews(){
         view.addSubview(mainImageView)
@@ -170,6 +170,5 @@ class MemoHomeViewController : UIViewController{
         viewModel.onMoveToComplete()
     }
 }
-
 
 

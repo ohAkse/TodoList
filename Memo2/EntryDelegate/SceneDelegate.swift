@@ -14,7 +14,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else {return}
         window = UIWindow(windowScene: windowScene)
-        let memoHomeVC = MemoHomeViewController()
+        var memoHomeVC = MemoHomeViewController()
+        memoHomeVC.bind(viewModel: MemoHomeViewModel())
         let navigationController = UINavigationController(rootViewController: memoHomeVC)
         window?.rootViewController = navigationController
         window?.backgroundColor = UIColor.white

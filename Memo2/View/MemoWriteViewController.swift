@@ -6,8 +6,10 @@
 //
 
 import UIKit
-class MemoWriteViewController : UIViewController, UITextViewDelegate
+class MemoWriteViewController : UIViewController, UITextViewDelegate, ViewModelBindableType
 {
+    var viewModel : MemoWriteViewViewModel!
+    
     lazy var titleLabel : UILabel = {
         let label = UILabel()
         label.setupCustomLabelFont(text: UISheetPaperType.none.typeValue, isBold: true)
@@ -44,12 +46,9 @@ class MemoWriteViewController : UIViewController, UITextViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupSubviews()
-        setupLayout()
-        setupBind()
         originText = textContent.text
     }
-    let viewModel = MemoWriteViewViewModel()
+    
     
     func setupBind(){
         viewModel.confirmAction = { [weak self] (category, bsuccess) in

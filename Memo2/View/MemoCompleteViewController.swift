@@ -25,7 +25,7 @@ extension MemoCompleteViewController: UITableViewDelegate, UITableViewDataSource
         return cellHeight
     }
 }
-class MemoCompleteViewController : UIViewController{
+class MemoCompleteViewController : UIViewController, ViewModelBindableType{
     lazy var titleLabel : UILabel = {
         let label = UILabel()
         label.setupCustomLabelFont(text: "완료 리스트", isBold: true)
@@ -54,12 +54,8 @@ class MemoCompleteViewController : UIViewController{
     lazy var categoryButton : UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "category1"), for: .normal)
-        button.isUserInteractionEnabled = true
         return button
     }()
-    var categoryMenu = UIMenu(title: "", children: [])
-    var category : String = ""
-    
     deinit{
         print("MemoCompleteViewController deinit called")
     }
@@ -67,20 +63,18 @@ class MemoCompleteViewController : UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
     }
-    var viewModel = MemoCompleteViewModel()
+    var viewModel : MemoCompleteViewModel!
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupSubviews()
-        setupLayout()
-        setupBind()
     }
+    var category : String = ""
+    
     func setupBind(){
         let menu = UIMenu(title: "", children: viewModel.menuItems)
-        self.categoryMenu = menu
         self.categoryButton.menu = menu
         self.categoryButton.showsMenuAsPrimaryAction = true
-        
+
         viewModel.categoryDataAction = { [weak self] in
             guard let self = self else {return}
             tableView.reloadData()
@@ -103,7 +97,6 @@ class MemoCompleteViewController : UIViewController{
         view.addSubview(decendingButton)
         view.addSubview(categoryButton)
     }
-    
     func setupLayout() {
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

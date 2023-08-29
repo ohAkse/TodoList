@@ -127,7 +127,9 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [deleteAction,editAction])
     }
 }
-class MemoListViewController : UIViewController{
+class MemoListViewController : UIViewController, ViewModelBindableType{
+    var viewModel: MemoListViewViewModel!
+    
     lazy var tableView : UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.setupCustomTableviewUI()
@@ -135,7 +137,6 @@ class MemoListViewController : UIViewController{
         tableView.dataSource = self
         return tableView
     }()
-    let viewModel = MemoListViewViewModel()
     
     deinit{
         print("MemoListViewController deinit called")
@@ -150,10 +151,8 @@ class MemoListViewController : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        setupSubviews()
-        setupLayout()
         setupTableFHView()
-        setupBind()
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(DidReceiveTextChangeCommitStatus),
@@ -177,7 +176,8 @@ class MemoListViewController : UIViewController{
         viewModel.createDataAction = { [weak self] in
             guard let self = self else{return}
             
-            let MemoCategoryVC = MemoCategoryViewController()
+            var MemoCategoryVC = MemoCategoryViewController()
+            MemoCategoryVC.bind(viewModel: MemoCategoryViewModel())
             if let presentationController = MemoCategoryVC.presentationController as? UISheetPresentationController {
                 presentationController.detents = [
                     .medium(),
@@ -192,7 +192,8 @@ class MemoListViewController : UIViewController{
                 return
             }
             
-            let memoWriteVC = MemoWriteViewController()
+            var memoWriteVC = MemoWriteViewController()
+            memoWriteVC.bind(viewModel: MemoWriteViewViewModel())
             if let presentationController = memoWriteVC.presentationController as? UISheetPresentationController {
                 presentationController.detents = [.medium()]
             }

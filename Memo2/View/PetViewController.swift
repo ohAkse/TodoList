@@ -7,7 +7,7 @@
 
 import UIKit
 import NVActivityIndicatorView
-class PetViewController : UIViewController
+class PetViewController : UIViewController, ViewModelBindableType
 {
     let instance = NetworkManager.instance
     lazy var catImageView: UIImageView = {
@@ -33,15 +33,12 @@ class PetViewController : UIViewController
         color: .black,
         padding: 0
     )
-    var viewModel = PetViewViewModel()
+    var viewModel : PetViewViewModel!
     deinit{
         print("PetViewController deinit called")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSubviews()
-        setupLayout()
-        setupBind()
     }
     override func viewDidAppear(_ animated: Bool) {
         catLoadingindicator.startAnimating()

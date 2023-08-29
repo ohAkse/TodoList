@@ -34,22 +34,22 @@ class MemoCompleteViewModel {
             guard let self = self else {
                 return
             }
-            self.filterAndReloadData(for: .workout)
-            self.categoryDataAction?()
+            filterAndReloadData(for: .workout)
+            categoryDataAction?()
         }
         let studyItem = UIAction(title: CategoryType.study.typeValue, image: UIImage(systemName: "sum")) { [weak self] _ in
             guard let self = self else {
                 return
             }
-            self.filterAndReloadData(for: .study)
-            self.categoryDataAction?()
+            filterAndReloadData(for: .study)
+            categoryDataAction?()
         }
         let meetingItem = UIAction(title: CategoryType.meeting.typeValue, image: UIImage(systemName: "person.3.sequence.fill")) { [weak self] _ in
             guard let self = self else {
                 return
             }
-            self.filterAndReloadData(for: .meeting)
-            self.categoryDataAction?()
+            filterAndReloadData(for: .meeting)
+            categoryDataAction?()
         }
         self.menuItems = [workoutItem,studyItem,meetingItem]
     }
