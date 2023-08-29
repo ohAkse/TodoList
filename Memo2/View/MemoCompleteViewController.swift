@@ -9,14 +9,14 @@ import UIKit
 
 extension MemoCompleteViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filterData.count
+        return viewModel.filterData.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TodoListCell") as? TodoListCell else {
             return UITableViewCell()
         }
         cell.selectionStyle = .none
-        cell.textView.text = filterData[indexPath.row].memoText
+        cell.textView.text = viewModel.filterData[indexPath.row].memoText
         cell.textView.isUserInteractionEnabled = false
         cell.switchButton.isHidden = true
         return cell
@@ -59,8 +59,6 @@ class MemoCompleteViewController : UIViewController{
     }()
     var categoryMenu = UIMenu(title: "", children: [])
     var category : String = ""
-    let instance = LocalDBManager.instance
-    var filterData : [SectionItem] = []
     
     deinit{
         print("MemoCompleteViewController deinit called")
@@ -68,47 +66,36 @@ class MemoCompleteViewController : UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        filterData = instance.readCompleteData(category: .workout).filter{$0.isSwitchOn == true} //초기데이터 설정
     }
-    
+    var viewModel = MemoCompleteViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupSubviews()
         setupLayout()
-        setupCategoryMenu()
-        
+        setupBind()
     }
-    func filterAndReloadData(for category: CategoryType) {
-        filterData = instance.readCompleteData(category: category).filter { $0.isSwitchOn == true }
-        tableView.reloadData()
-    }
-    func setupCategoryMenu(){
-        var menuItems: [UIMenuElement] = []
-        menuItems.append(UIAction(title: CategoryType.workout.typeValue, image: UIImage(systemName: "figure.walk")) { [weak self] _ in
-            guard let self = self else {
-                return
-            }
-            filterAndReloadData(for: .workout)
-        })
-        menuItems.append(UIAction(title: CategoryType.study.typeValue, image: UIImage(systemName: "sum")) { [weak self] _ in
-            guard let self = self else {
-                return
-            }
-            filterAndReloadData(for: .study)
-        })
-        menuItems.append(UIAction(title: CategoryType.meeting.typeValue, image: UIImage(systemName: "person.3.sequence.fill")) { [weak self] _ in
-            guard let self = self else {
-                return
-            }
-            filterAndReloadData(for: .meeting)
-        })
-        let menu = UIMenu(title: "", children: menuItems)
+    func setupBind(){
+        let menu = UIMenu(title: "", children: viewModel.menuItems)
         self.categoryMenu = menu
-        self.categoryButton.showsMenuAsPrimaryAction = true
         self.categoryButton.menu = menu
+        self.categoryButton.showsMenuAsPrimaryAction = true
+        
+        viewModel.categoryDataAction = { [weak self] in
+            guard let self = self else {return}
+            tableView.reloadData()
+        }
+        viewModel.ascendingDataAction = { [weak self] in
+            guard let self = self else {return}
+            viewModel.filterData.sort { $0.memoText > $1.memoText }
+            tableView.reloadData()
+        }
+        viewModel.descendingDataAction = { [weak self] in
+            guard let self = self else {return}
+            viewModel.filterData.sort { $0.memoText < $1.memoText }
+            tableView.reloadData()
+        }
     }
-    
     func setupSubviews(){
         view.addSubview(tableView)
         view.addSubview(titleLabel)
@@ -151,13 +138,9 @@ class MemoCompleteViewController : UIViewController{
         }
     }
     @objc func ascendingButtonTapped(){
-        filterData.sort { $0.memoText < $1.memoText }
-        tableView.reloadData()
+        viewModel.ascendingDataAction?()
     }
     @objc func descendingButtonTapped(){
-        filterData.sort { $0.memoText > $1.memoText }
-        tableView.reloadData()
+        viewModel.descendingDataAction?()
     }
 }
-
-

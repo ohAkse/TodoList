@@ -33,7 +33,7 @@ class PetViewController : UIViewController
         color: .black,
         padding: 0
     )
-    
+    var viewModel = PetViewViewModel()
     deinit{
         print("PetViewController deinit called")
     }
@@ -41,99 +41,56 @@ class PetViewController : UIViewController
         super.viewDidLoad()
         setupSubviews()
         setupLayout()
+        setupBind()
     }
     override func viewDidAppear(_ animated: Bool) {
-        if #available(iOS 16, *) {
-            Task{
-                await setupImagesAsync()
-                //await MainActor.run{
-                //    setupImages()
-                //}
-            }
-        }else{
-            setupImages()
-        }
         catLoadingindicator.startAnimating()
         dogLoadingindicator.startAnimating()
     }
-    func setupImagesAsync() async {
-        let dogImageURL = "https://api.thedogapi.com/v1/images/search"
-        let catImageURL = "https://api.thecatapi.com/v1/images/search"
-        let dogImageTask = Task {
-            let dogImageResponse = await instance.fetchRandomImageAsync(imageUrl: dogImageURL)
-            return dogImageResponse
-        }
-        let catImageTask = Task {
-            let catImageResponse = await instance.fetchRandomImageAsync(imageUrl: catImageURL)
-            return catImageResponse
-        }
-        let (dogImageResponse, catImageResponse) =  await (dogImageTask.value, catImageTask.value)
-        switch (dogImageResponse, catImageResponse) {
-        case (.success(let dogImage), .success(let catImage)):
-            DispatchQueue.main.async {[weak self] in
-                guard let self = self else {return}
-                dogLoadingindicator.stopAnimating()
-                dogImageView.image = dogImage
-                catLoadingindicator.stopAnimating()
-                catImageView.image = catImage
+    func setupBind(){
+        if #available(iOS 16.0, *) {
+            Task {
+                await viewModel.setupImagesAsync { [weak self] dogResponse, catResponse in
+                    guard let self = self else { return }
+                    switch (dogResponse, catResponse) {
+                    case (.success(let dogImage), .success(let catImage)):
+                        DispatchQueue.main.async { [weak self] in
+                            guard let self = self else {return}
+                            dogImageView.image = dogImage
+                            dogLoadingindicator.stopAnimating()
+                            catImageView.image = catImage
+                            catLoadingindicator.stopAnimating()
+                        }
+                    case (.error(let dogError), .error(let catError)):
+                        print("Dog Error: \(dogError), Cat Error: \(catError)")
+                    default:
+                        print("error")
+                    }
+                }
             }
-        case (.error(let dogError), .error(let catError)):
-            print("Dog Error: \(dogError), Cat Error: \(catError)")
-        default:
-            break
+            
+        }
+        else{
+            viewModel.setupImages { [weak self] dogImage, catImage in
+                guard let self = self else { return }
+                if let dogImage = dogImage {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else{return }
+                        dogImageView.image = dogImage
+                        dogLoadingindicator.stopAnimating()
+                    }
+                }
+                if let catImage = catImage {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else{return }
+                        catImageView.image = catImage
+                        catLoadingindicator.stopAnimating()
+                    }
+                }
+            }
         }
     }
     
-    func setupImages() {
-        let dogImageURL = "https://api.thedogapi.com/v1/images/search"
-        let catImageURL = "https://api.thecatapi.com/v1/images/search"
-        let group = DispatchGroup()
-        
-        group.enter()
-        DispatchQueue.global().async { [weak self] in
-            guard let self = self else { return }
-            instance.fetchRandomImage(imageUrl: dogImageURL) { [weak self] dogImageResponse in
-                guard let self = self else { return }
-                switch dogImageResponse {
-                case .success(let dogImage):
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        dogLoadingindicator.stopAnimating()
-                        dogImageView.image = dogImage
-                        group.leave()
-                    }
-                case .error(let errorMessage):
-                    print("Dog Image Error: \(errorMessage)")
-                    group.leave()
-                default:
-                    break
-                }
-            }
-        }
-        
-        group.enter()
-        DispatchQueue.global().async { [weak self ] in
-            guard let self = self else { return }
-            instance.fetchRandomImage(imageUrl: catImageURL) { [weak self] catImageResponse in
-                guard let self = self else { return }
-                switch catImageResponse {
-                case .success(let catImage):
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        catLoadingindicator.stopAnimating()
-                        catImageView.image = catImage
-                        group.leave()
-                    }
-                case .error(let errorMessage):
-                    print("Cat Image Error: \(errorMessage)")
-                    group.leave()
-                default:
-                    break
-                }
-            }
-        }
- 
-    }
     
     func setupSubviews(){
         view.addSubview(dogImageView)
