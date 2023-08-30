@@ -1,7 +1,7 @@
 # **Notice**
 1)기존에 작업했던 브랜치의 경우 프로젝트가 열리지 않는 문제가 있어 새롭게 브랜치 만들어 작성했습니다. **이전 커밋내역은 우측 링크에서 확인**하실수있습니다.(https://github.com/ohAkse/Memo2)
 
-2)MVVM 패턴을 적용한 다른 코드는(https://github.com/ohAkse/TodoList/tree/release_mvvm)여기서 확인하실 수 있습니다.(RxSwift/Combine 적용 X)
+2)MVVM 패턴을 적용한 다른 코드는(https://github.com/ohAkse/TodoList/tree/release_mvvm) 에서 확인하실 수 있습니다.(RxSwift/Combine 적용 X)
   
 3)UISheetPresentationController를 사용함으로 인해 최소 **IOS 15버전 이상이여야 정상적으로 확인**하실수 있으며, 추가과제 기능 구현 중 이미지를 불러오는 부분에서 16버전이상일 경우와 아닌 경우에 따라 이미지를 받아오는 로직을 다르게 처리하는 부분이 있어 OS 버전별로 기능 확인하실 수 있습니다.(15-15.5 -> 비동기 콜백함수로 처리, 16버전 이상 -> Async await 비동기 함수 처리)  
 * **async/await처리를 담당하는 함수는 두개의 작업이 끝났을때 UI에 동시에 보여지며, 비동기 콜백 함수처리의 경우 작업단위를 구분짓고 처리가 완료되는대로 UI에 표시되게 기능을 구현**하였습니다.
