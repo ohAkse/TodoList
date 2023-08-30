@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MemoCategoryViewController : UIViewController
+class MemoCategoryViewController : UIViewController, ViewModelBindableType
 {
     lazy var titleLabel : UILabel = {
         let label = UILabel()
@@ -44,14 +44,28 @@ class MemoCategoryViewController : UIViewController
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupSubviews()
-        setupLayout()
     }
+    var viewModel : MemoCategoryViewModel!
+    
+    func setupBind(){
+        viewModel.workoutButtonAction = { [weak self] in
+            guard let self = self else { return }
+            moveMemoWriteViewController(categoryType: CategoryType.workout)
+        }
+        viewModel.studyButtonAction = { [weak self] in
+            guard let self = self else { return }
+            moveMemoWriteViewController(categoryType: CategoryType.study)
+        }
+        viewModel.meetingButtonAction = { [weak self] in
+            guard let self = self else { return }
+            moveMemoWriteViewController(categoryType: CategoryType.meeting)
+        }
+    }
+    
     func setupSubviews(){
         view.addSubview(titleLabel)
         view.addSubview(workoutButton)
@@ -65,14 +79,12 @@ class MemoCategoryViewController : UIViewController
             make.width.equalToSuperview().multipliedBy(0.3)
             make.height.equalToSuperview().multipliedBy(0.1)
         }
-
         workoutButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(10)
             make.width.equalToSuperview().multipliedBy(0.6)
             make.height.equalToSuperview().multipliedBy(0.15)
         }
-
         studytButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview() 
             make.top.equalTo(workoutButton.snp.bottom).offset(30)
@@ -89,7 +101,8 @@ class MemoCategoryViewController : UIViewController
     }
     func moveMemoWriteViewController(categoryType : CategoryType)
     {
-        let memoWriteVC = MemoWriteViewController()
+        var memoWriteVC = MemoWriteViewController()
+        memoWriteVC.bind(viewModel: MemoWriteViewViewModel())
         if let presentationController = memoWriteVC.presentationController as? UISheetPresentationController {
             presentationController.detents = [
                 .medium(),
@@ -100,13 +113,13 @@ class MemoCategoryViewController : UIViewController
         self.present(memoWriteVC, animated: true)
     }
     @objc func workoutButtonTapped(){
-        moveMemoWriteViewController(categoryType: .workout)
+        viewModel.onBindWorkoutButton()
     }
     @objc func studytButtonTapped(){
-        moveMemoWriteViewController(categoryType: .study)
+        viewModel.onBindStudyButton()
     }
     @objc func meetingButtonTapped(){
-        moveMemoWriteViewController(categoryType: .meeting)
+        viewModel.onBindMeetingDataAction()
     }
 }
 

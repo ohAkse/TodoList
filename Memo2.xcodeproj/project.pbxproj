@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F14B90E2A9DBB8D007565D0 /* MemoHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B90D2A9DBB8D007565D0 /* MemoHomeViewModel.swift */; };
+		5F14B9102A9DCA74007565D0 /* PetViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B90F2A9DCA74007565D0 /* PetViewViewModel.swift */; };
+		5F14B9122A9DE898007565D0 /* MemoCompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B9112A9DE898007565D0 /* MemoCompleteViewModel.swift */; };
+		5F14B9142A9E0614007565D0 /* MemoListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B9132A9E0614007565D0 /* MemoListViewViewModel.swift */; };
+		5F14B9182A9E07ED007565D0 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B9172A9E07ED007565D0 /* Observable.swift */; };
+		5F14B91A2A9E262C007565D0 /* MemoCategoryViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B9192A9E262C007565D0 /* MemoCategoryViewViewModel.swift */; };
+		5F14B91C2A9E2994007565D0 /* MemoWriteViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B91B2A9E2994007565D0 /* MemoWriteViewViewModel.swift */; };
+		5F14B92B2A9E49EF007565D0 /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14B92A2A9E49EF007565D0 /* ViewModelBindableType.swift */; };
 		5F25E9902A9889D600668C32 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F25E98F2A9889D600668C32 /* NetworkManager.swift */; };
 		5F25E9962A988CB300668C32 /* PetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F25E9952A988CB300668C32 /* PetViewController.swift */; };
 		5F25E9982A989B4300668C32 /* NetworkResponseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F25E9972A989B4300668C32 /* NetworkResponseStatus.swift */; };
@@ -39,6 +47,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F14B90D2A9DBB8D007565D0 /* MemoHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoHomeViewModel.swift; sourceTree = "<group>"; };
+		5F14B90F2A9DCA74007565D0 /* PetViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewViewModel.swift; sourceTree = "<group>"; };
+		5F14B9112A9DE898007565D0 /* MemoCompleteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoCompleteViewModel.swift; sourceTree = "<group>"; };
+		5F14B9132A9E0614007565D0 /* MemoListViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewViewModel.swift; sourceTree = "<group>"; };
+		5F14B9172A9E07ED007565D0 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		5F14B9192A9E262C007565D0 /* MemoCategoryViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoCategoryViewViewModel.swift; sourceTree = "<group>"; };
+		5F14B91B2A9E2994007565D0 /* MemoWriteViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoWriteViewViewModel.swift; sourceTree = "<group>"; };
+		5F14B92A2A9E49EF007565D0 /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
 		5F25E98F2A9889D600668C32 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		5F25E9952A988CB300668C32 /* PetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewController.swift; sourceTree = "<group>"; };
 		5F25E9972A989B4300668C32 /* NetworkResponseStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponseStatus.swift; sourceTree = "<group>"; };
@@ -84,6 +100,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F14B90C2A9DBB6F007565D0 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5F14B9292A9E49D8007565D0 /* Protocol */,
+				5F14B90D2A9DBB8D007565D0 /* MemoHomeViewModel.swift */,
+				5F14B90F2A9DCA74007565D0 /* PetViewViewModel.swift */,
+				5F14B9112A9DE898007565D0 /* MemoCompleteViewModel.swift */,
+				5F14B9132A9E0614007565D0 /* MemoListViewViewModel.swift */,
+				5F14B9192A9E262C007565D0 /* MemoCategoryViewViewModel.swift */,
+				5F14B91B2A9E2994007565D0 /* MemoWriteViewViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5F14B9292A9E49D8007565D0 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				5F14B92A2A9E49EF007565D0 /* ViewModelBindableType.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		5F68322C2A963FC8008B3EB7 /* Enum */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,11 +173,13 @@
 				5F828CE32A964E59004EBCF0 /* Service */,
 				5FE03CAC2A948BF40099E297 /* EntryDelegate */,
 				5FE03CAA2A948BCF0099E297 /* Model */,
+				5F14B90C2A9DBB6F007565D0 /* ViewModel */,
 				5FE03CA92A948BC10099E297 /* View */,
 				5FE03CA42A948B390099E297 /* Extension */,
 				5FE03C992A948A190099E297 /* Assets.xcassets */,
 				5FE03C9B2A948A190099E297 /* LaunchScreen.storyboard */,
 				5FE03C9E2A948A190099E297 /* Info.plist */,
+				5F14B9172A9E07ED007565D0 /* Observable.swift */,
 			);
 			path = Memo2;
 			sourceTree = "<group>";
@@ -283,22 +323,30 @@
 				5F6832342A964068008B3EB7 /* TextChnageCommitStatus.swift in Sources */,
 				5F25E9902A9889D600668C32 /* NetworkManager.swift in Sources */,
 				5F6832272A95D3B5008B3EB7 /* MemoWriteViewController.swift in Sources */,
+				5F14B92B2A9E49EF007565D0 /* ViewModelBindableType.swift in Sources */,
 				5F68322B2A960910008B3EB7 /* NotificationCenter.swift in Sources */,
 				5FE03C932A948A180099E297 /* SceneDelegate.swift in Sources */,
 				5FE03CAE2A948C700099E297 /* Memo.swift in Sources */,
+				5F14B90E2A9DBB8D007565D0 /* MemoHomeViewModel.swift in Sources */,
 				5F68322E2A964003008B3EB7 /* UISheetPaperType.swift in Sources */,
+				5F14B9142A9E0614007565D0 /* MemoListViewViewModel.swift in Sources */,
+				5F14B91A2A9E262C007565D0 /* MemoCategoryViewViewModel.swift in Sources */,
 				5FE03CA62A948B4D0099E297 /* Date.swift in Sources */,
 				5F6832252A95CE3B008B3EB7 /* MemoCategoryViewController.swift in Sources */,
+				5F14B9122A9DE898007565D0 /* MemoCompleteViewModel.swift in Sources */,
 				5F828CE52A964E70004EBCF0 /* LocalDBManager.swift in Sources */,
+				5F14B9182A9E07ED007565D0 /* Observable.swift in Sources */,
 				5F25E9962A988CB300668C32 /* PetViewController.swift in Sources */,
 				5FE03CB02A9490960099E297 /* MemoListViewController.swift in Sources */,
 				5FE03CA82A948B5C0099E297 /* UIViewController.swift in Sources */,
 				5F25E99A2A98B1E600668C32 /* Animal.swift in Sources */,
 				5FE03CCB2A94ED820099E297 /* TodoListCell.swift in Sources */,
+				5F14B91C2A9E2994007565D0 /* MemoWriteViewViewModel.swift in Sources */,
 				5FE03CC62A94A8A10099E297 /* UIButton.swift in Sources */,
 				5FE03CB62A9490ED0099E297 /* MemoCompleteViewController.swift in Sources */,
 				5FE03CC82A94CFB50099E297 /* UILabel.swift in Sources */,
 				5FE03CB82A94911B0099E297 /* MemoHomeViewController.swift in Sources */,
+				5F14B9102A9DCA74007565D0 /* PetViewViewModel.swift in Sources */,
 				5F6832302A964022008B3EB7 /* CategoryType.swift in Sources */,
 				5FF5FCEC2A97935800D9CA8A /* UITableView.swift in Sources */,
 				5F25E9982A989B4300668C32 /* NetworkResponseStatus.swift in Sources */,

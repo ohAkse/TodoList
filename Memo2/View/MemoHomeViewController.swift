@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 import NVActivityIndicatorView
-class MemoHomeViewController : UIViewController{
+class MemoHomeViewController : UIViewController, ViewModelBindableType{
     
     lazy var mainImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: ""))
@@ -51,62 +51,74 @@ class MemoHomeViewController : UIViewController{
     
     let instance = NetworkManager.instance
     override func viewDidAppear(_ animated: Bool) {
-        if #available(iOS 16.0, *) {
-            Task{
-                await setupLogoImageViewAsync()
-               //await MainActor.run{
-                   //setLogoImageView()
-               //}
-            }
-        }else{
-            setLogoImageView()
-        }
-        mainLoadingindicator.startAnimating()
+        super.viewDidAppear(true)
     }
-    func setLogoImageView() {
-        DispatchQueue.global().async{[weak self] in
-            guard let self = self else{return}
-            instance.getImage(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg") { [weak self] imageResponse in
-                guard let self = self else { return }
-                switch imageResponse {
-                case .success(let image):
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        mainLoadingindicator.stopAnimating()
-                        mainImageView.image = image
-                    }
-                case .error(let errorMessage):
-                    print("Error fetching image: \(errorMessage)")
-                default:
-                    break
-                }
-            }
-        }
-    }
-    func setupLogoImageViewAsync() async {
-        Task{
-            do {
-                let imageResponse = await instance.getImageAsync(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg")
-                switch imageResponse {
-                case .success(let image):
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        mainLoadingindicator.stopAnimating()
-                        mainImageView.image = image
-                    }
-                case .error(let errorMessage):
-                    print("Error fetching image: \(errorMessage)")
-                default:
-                    break
-                }
-            }
-        }
-    }
+    
+    var viewModel : MemoHomeViewModel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSubviews()
-        setupLayout()
+        mainLoadingindicator.startAnimating()
     }
+    func setupBind(){
+        viewModel.moveToListAction = { [weak self] in
+            guard let self = self else { return }
+            var memoListVC = MemoListViewController()
+            memoListVC.bind(viewModel: MemoListViewViewModel())
+            UIView.transition(with: self.navigationController!.view, duration: 0.5, options: .transitionFlipFromBottom, animations: {
+                self.navigationController?.pushViewController(memoListVC, animated: false)
+            }, completion: nil)
+        }
+        viewModel.moveToCompleteAction = { [weak self] in
+            guard let self = self else { return }
+            var memoListVC = MemoCompleteViewController()
+            memoListVC.bind(viewModel: MemoCompleteViewModel())
+            present(memoListVC, animated: true, completion: nil)
+        }
+        
+        viewModel.moveToPetAction = { [weak self] in
+            guard let self = self else { return }
+            var petViewController = PetViewController()
+            petViewController.bind(viewModel: PetViewViewModel())
+            UIView.transition(with: navigationController!.view, duration: 0.5, options: .transitionFlipFromTop, animations: {
+                self.navigationController?.pushViewController(petViewController, animated: false)
+            }, completion: nil)
+        }
+        if #available(iOS 16.0, *)
+        {
+            Task {
+                await viewModel.setupLogoImageViewAsync { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let image):
+                        DispatchQueue.main.async {
+                            self.mainImageView.image = image
+                            self.mainLoadingindicator.stopAnimating()
+                        }
+                    case .error(let errorMessage):
+                        print("Error fetching image: \(errorMessage)")
+                    default :
+                        print("error")
+                    }
+                }
+            }
+        }else{
+            viewModel.setLogoImageView { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let image):
+                    DispatchQueue.main.async {
+                        self.mainImageView.image = image
+                        self.mainLoadingindicator.stopAnimating()
+                    }
+                case .error(let errorMessage):
+                    print("Error fetching image: \(errorMessage)")
+                default :
+                    print("error")
+                }
+            }
+        }
+    }
+    
     
     func setupSubviews(){
         view.addSubview(mainImageView)
@@ -149,23 +161,14 @@ class MemoHomeViewController : UIViewController{
         }
     }
     @objc func moveToAnimalButtonTapped(){
-        let petViewController = PetViewController()
-        UIView.transition(with: navigationController!.view, duration: 0.5, options: .transitionFlipFromTop, animations: {
-            self.navigationController?.pushViewController(petViewController, animated: false)
-        }, completion: nil)
+        viewModel.onMoveToPet()
     }
-    
     @objc func moveToListButtonTapped(){
-        let memoListVC = MemoListViewController()
-        UIView.transition(with: navigationController!.view, duration: 0.5, options: .transitionFlipFromBottom, animations: {
-            self.navigationController?.pushViewController(memoListVC, animated: false)
-        }, completion: nil)
+        viewModel.onMoveToList()
     }
     @objc func moveToCompletsButtonTapped(){
-        let memoListVC = MemoCompleteViewController()
-        present(memoListVC, animated: true, completion: nil)
+        viewModel.onMoveToComplete()
     }
 }
-
 
 
