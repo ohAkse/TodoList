@@ -200,6 +200,7 @@ class MemoListViewController : UIViewController, ViewModelBindableType{
             memoWriteVC.titleLabel.text = UISheetPaperType.update.typeValue
             memoWriteVC.category = item.category
             memoWriteVC.selectedItem = item.item
+            memoWriteVC.originText = text
             memoWriteVC.textContent.text = text
             present(memoWriteVC, animated: true)
         }
