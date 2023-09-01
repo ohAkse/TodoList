@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F0693022AA0F8980029666B /* RemoteImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0693012AA0F8980029666B /* RemoteImageLoader.swift */; };
+		5F0693042AA0F8A20029666B /* RemoteAnimalLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0693032AA0F8A20029666B /* RemoteAnimalLoader.swift */; };
 		5F25E9902A9889D600668C32 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F25E98F2A9889D600668C32 /* NetworkManager.swift */; };
 		5F25E9962A988CB300668C32 /* PetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F25E9952A988CB300668C32 /* PetViewController.swift */; };
 		5F25E9982A989B4300668C32 /* NetworkResponseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F25E9972A989B4300668C32 /* NetworkResponseStatus.swift */; };
@@ -22,7 +24,6 @@
 		5F828CE82A9650F3004EBCF0 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F828CE72A9650F3004EBCF0 /* Dummy.swift */; };
 		5FE03C912A948A180099E297 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03C902A948A180099E297 /* AppDelegate.swift */; };
 		5FE03C932A948A180099E297 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03C922A948A180099E297 /* SceneDelegate.swift */; };
-		5FE03CA62A948B4D0099E297 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03CA52A948B4D0099E297 /* Date.swift */; };
 		5FE03CA82A948B5C0099E297 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03CA72A948B5C0099E297 /* UIViewController.swift */; };
 		5FE03CAE2A948C700099E297 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03CAD2A948C700099E297 /* Memo.swift */; };
 		5FE03CB02A9490960099E297 /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03CAF2A9490960099E297 /* MemoListViewController.swift */; };
@@ -39,6 +40,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F0693012AA0F8980029666B /* RemoteImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageLoader.swift; sourceTree = "<group>"; };
+		5F0693032AA0F8A20029666B /* RemoteAnimalLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteAnimalLoader.swift; sourceTree = "<group>"; };
 		5F25E98F2A9889D600668C32 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		5F25E9952A988CB300668C32 /* PetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewController.swift; sourceTree = "<group>"; };
 		5F25E9972A989B4300668C32 /* NetworkResponseStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponseStatus.swift; sourceTree = "<group>"; };
@@ -58,7 +61,6 @@
 		5FE03C992A948A190099E297 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5FE03C9C2A948A190099E297 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5FE03C9E2A948A190099E297 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5FE03CA52A948B4D0099E297 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		5FE03CA72A948B5C0099E297 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		5FE03CAD2A948C700099E297 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		5FE03CAF2A9490960099E297 /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +86,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F0692FC2AA0F7EF0029666B /* Loader */ = {
+			isa = PBXGroup;
+			children = (
+				5F0693012AA0F8980029666B /* RemoteImageLoader.swift */,
+				5F0693032AA0F8A20029666B /* RemoteAnimalLoader.swift */,
+			);
+			path = Loader;
+			sourceTree = "<group>";
+		};
 		5F68322C2A963FC8008B3EB7 /* Enum */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +109,7 @@
 		5F828CE32A964E59004EBCF0 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				5F0692FC2AA0F7EF0029666B /* Loader */,
 				5F828CE42A964E70004EBCF0 /* LocalDBManager.swift */,
 				5F25E98F2A9889D600668C32 /* NetworkManager.swift */,
 			);
@@ -147,7 +159,6 @@
 		5FE03CA42A948B390099E297 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				5FE03CA52A948B4D0099E297 /* Date.swift */,
 				5FE03CA72A948B5C0099E297 /* UIViewController.swift */,
 				5FE03CC52A94A8A10099E297 /* UIButton.swift */,
 				5FE03CC72A94CFB50099E297 /* UILabel.swift */,
@@ -287,9 +298,10 @@
 				5FE03C932A948A180099E297 /* SceneDelegate.swift in Sources */,
 				5FE03CAE2A948C700099E297 /* Memo.swift in Sources */,
 				5F68322E2A964003008B3EB7 /* UISheetPaperType.swift in Sources */,
-				5FE03CA62A948B4D0099E297 /* Date.swift in Sources */,
 				5F6832252A95CE3B008B3EB7 /* MemoCategoryViewController.swift in Sources */,
+				5F0693022AA0F8980029666B /* RemoteImageLoader.swift in Sources */,
 				5F828CE52A964E70004EBCF0 /* LocalDBManager.swift in Sources */,
+				5F0693042AA0F8A20029666B /* RemoteAnimalLoader.swift in Sources */,
 				5F25E9962A988CB300668C32 /* PetViewController.swift in Sources */,
 				5FE03CB02A9490960099E297 /* MemoListViewController.swift in Sources */,
 				5FE03CA82A948B5C0099E297 /* UIViewController.swift in Sources */,

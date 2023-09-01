@@ -18,7 +18,6 @@ enum NetworkError: Error {
     case statusCode(HTTPStatusCode)
     case unknown(String)
     case wrongUrL(String)
-    
     enum HTTPStatusCode {
         case success
         case redirection(Int)

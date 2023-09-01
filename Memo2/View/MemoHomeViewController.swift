@@ -9,13 +9,13 @@ import UIKit
 import SnapKit
 import NVActivityIndicatorView
 class MemoHomeViewController : UIViewController{
-    
-    lazy var mainImageView: UIImageView = {
+    private var logoImageLoader : RemoteImageLoader?
+    private lazy var mainImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: ""))
         return imageView
     }()
     
-    lazy var moveToCompleteButton : UIButton = {
+    private lazy var moveToCompleteButton : UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("완료 목록 이동하기", for: .normal)
         button.addTarget(self, action: #selector(moveToCompletsButtonTapped), for: .touchUpInside)
@@ -24,7 +24,7 @@ class MemoHomeViewController : UIViewController{
         return button
     }()
     
-    lazy var moveToListButton : UIButton = {
+    private lazy var moveToListButton : UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("리스트로 이동하기", for: .normal)
         button.addTarget(self, action: #selector(moveToListButtonTapped), for: .touchUpInside)
@@ -33,7 +33,7 @@ class MemoHomeViewController : UIViewController{
         return button
     }()
     
-    lazy var moveToAnimalButton : UIButton = {
+    private lazy var moveToAnimalButton : UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("동물 구경하러 이동하기", for: .normal)
         button.addTarget(self, action: #selector(moveToAnimalButtonTapped), for: .touchUpInside)
@@ -42,38 +42,35 @@ class MemoHomeViewController : UIViewController{
         return button
     }()
     
-    let mainLoadingindicator = NVActivityIndicatorView(
+    private let mainLoadingindicator = NVActivityIndicatorView(
         frame: CGRect.zero,
         type: .ballSpinFadeLoader,
         color: .black,
         padding: 0
     )
     
-    let instance = NetworkManager.instance
+    private let instance = NetworkManager.instance
     override func viewDidAppear(_ animated: Bool) {
         if #available(iOS 16.0, *) {
             Task{
                 await setupLogoImageViewAsync()
-               //await MainActor.run{
-                   //setLogoImageView()
-               //}
             }
         }else{
             setLogoImageView()
         }
         mainLoadingindicator.startAnimating()
     }
-    func setLogoImageView() {
+    private func setLogoImageView() {
         DispatchQueue.global().async{[weak self] in
             guard let self = self else{return}
-            instance.getImage(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg") { [weak self] imageResponse in
+            logoImageLoader?.loadImage(){ [weak self] imageResponse in
                 guard let self = self else { return }
                 switch imageResponse {
                 case .success(let image):
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else { return }
                         mainLoadingindicator.stopAnimating()
-                        mainImageView.image = image
+                        mainImageView.image = UIImage(data : image)
                     }
                 case .error(let errorMessage):
                     print("Error fetching image: \(errorMessage)")
@@ -83,40 +80,35 @@ class MemoHomeViewController : UIViewController{
             }
         }
     }
-    func setupLogoImageViewAsync() async {
+    private func setupLogoImageViewAsync() async {
         Task{
             do {
-                let imageResponse = await instance.getImageAsync(imageUrl: "https://spartacodingclub.kr/css/images/scc-og.jpg")
-                switch imageResponse {
-                case .success(let image):
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
+                let image = try await logoImageLoader?.loadImageAsync()
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    if let image = image{
                         mainLoadingindicator.stopAnimating()
-                        mainImageView.image = image
+                        mainImageView.image = UIImage(data : image)
+                    } else{
+                        return
                     }
-                case .error(let errorMessage):
-                    print("Error fetching image: \(errorMessage)")
-                default:
-                    break
                 }
+            }
+            catch{
+                throw InvalidData()
             }
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSubviews()
         setupLayout()
+        setupLogoImageLoader()
     }
-    
-    func setupSubviews(){
-        view.addSubview(mainImageView)
-        view.addSubview(moveToListButton)
-        view.addSubview(moveToCompleteButton)
-        view.addSubview(moveToAnimalButton)
-        view.addSubview(mainLoadingindicator)
+    private func setupLogoImageLoader(){
+        logoImageLoader = RemoteImageLoader(url: URL(string: "https://spartacodingclub.kr/css/images/scc-og.jpg")!, instance: NetworkManager.instance)
     }
-    
-    func setupLayout(){
+    private func setupLayout(){
+        [mainImageView, moveToListButton, moveToCompleteButton,moveToAnimalButton,mainLoadingindicator].forEach(view.addSubview)
         mainImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -148,20 +140,20 @@ class MemoHomeViewController : UIViewController{
             make.height.equalTo(moveToCompleteButton.snp.height)
         }
     }
-    @objc func moveToAnimalButtonTapped(){
+    @objc private func moveToAnimalButtonTapped(){
         let petViewController = PetViewController()
         UIView.transition(with: navigationController!.view, duration: 0.5, options: .transitionFlipFromTop, animations: {
             self.navigationController?.pushViewController(petViewController, animated: false)
         }, completion: nil)
     }
     
-    @objc func moveToListButtonTapped(){
+    @objc private func moveToListButtonTapped(){
         let memoListVC = MemoListViewController()
         UIView.transition(with: navigationController!.view, duration: 0.5, options: .transitionFlipFromBottom, animations: {
             self.navigationController?.pushViewController(memoListVC, animated: false)
         }, completion: nil)
     }
-    @objc func moveToCompletsButtonTapped(){
+    @objc private func moveToCompletsButtonTapped(){
         let memoListVC = MemoCompleteViewController()
         present(memoListVC, animated: true, completion: nil)
     }

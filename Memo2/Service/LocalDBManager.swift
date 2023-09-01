@@ -56,7 +56,6 @@ final class LocalDBManager{
             saveCategoriesToUserDefaults(initialData)
         }
     }
-    
    //텍스트 변경시
     func updateData(category: String, originText: String, changeText: String) {
         var updatedCategories = getCategoriesFromUserDefaults()

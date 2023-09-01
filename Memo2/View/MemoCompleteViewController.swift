@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 extension MemoCompleteViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filterData.count
@@ -26,64 +25,60 @@ extension MemoCompleteViewController: UITableViewDelegate, UITableViewDataSource
     }
 }
 class MemoCompleteViewController : UIViewController{
-    lazy var titleLabel : UILabel = {
+    private lazy var titleLabel : UILabel = {
         let label = UILabel()
         label.setupCustomLabelFont(text: "완료 리스트", isBold: true)
         label.textAlignment = .center
         return label
     }()
-    lazy var tableView : UITableView = {
+    private lazy var tableView : UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.setupCustomTableviewUI()
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
     }()
-    lazy var ascendingButton : UIButton = {
+    private lazy var ascendingButton : UIButton = {
         let button = UIButton(type: .system)
         button.addTarget(self, action: #selector(ascendingButtonTapped), for: .touchUpInside)
         button.setImage(UIImage(named: "ascending"), for: .normal)
         return button
     }()
-    lazy var decendingButton : UIButton = {
+    private lazy var decendingButton : UIButton = {
         let button = UIButton(type: .system)
         button.addTarget(self, action: #selector(descendingButtonTapped), for: .touchUpInside)
         button.setImage(UIImage(named: "descending"), for: .normal)
         return button
     }()
-    lazy var categoryButton : UIButton = {
+    private lazy var categoryButton : UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "category1"), for: .normal)
         button.isUserInteractionEnabled = true
         return button
     }()
-    var categoryMenu = UIMenu(title: "", children: [])
-    var category : String = ""
-    let instance = LocalDBManager.instance
-    var filterData : [SectionItem] = []
+    private var categoryMenu = UIMenu(title: "", children: [])
+    private var category : String = ""
+    private var filterData : [SectionItem] = []
+    private let instance = LocalDBManager.instance
     
     deinit{
         print("MemoCompleteViewController deinit called")
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         filterData = instance.readCompleteData(category: .workout).filter{$0.isSwitchOn == true} //초기데이터 설정
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupSubviews()
         setupLayout()
         setupCategoryMenu()
-        
     }
-    func filterAndReloadData(for category: CategoryType) {
+    private func filterAndReloadData(for category: CategoryType) {
         filterData = instance.readCompleteData(category: category).filter { $0.isSwitchOn == true }
         tableView.reloadData()
     }
-    func setupCategoryMenu(){
+    private func  setupCategoryMenu(){
         var menuItems: [UIMenuElement] = []
         menuItems.append(UIAction(title: CategoryType.workout.typeValue, image: UIImage(systemName: "figure.walk")) { [weak self] _ in
             guard let self = self else {
@@ -108,16 +103,8 @@ class MemoCompleteViewController : UIViewController{
         self.categoryButton.showsMenuAsPrimaryAction = true
         self.categoryButton.menu = menu
     }
-    
-    func setupSubviews(){
-        view.addSubview(tableView)
-        view.addSubview(titleLabel)
-        view.addSubview(ascendingButton)
-        view.addSubview(decendingButton)
-        view.addSubview(categoryButton)
-    }
-    
-    func setupLayout() {
+    private func setupLayout() {
+        [tableView, titleLabel, ascendingButton,decendingButton,categoryButton].forEach(view.addSubview)
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
@@ -150,11 +137,11 @@ class MemoCompleteViewController : UIViewController{
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
         }
     }
-    @objc func ascendingButtonTapped(){
+    @objc private func ascendingButtonTapped(){
         filterData.sort { $0.memoText < $1.memoText }
         tableView.reloadData()
     }
-    @objc func descendingButtonTapped(){
+    @objc private func descendingButtonTapped(){
         filterData.sort { $0.memoText > $1.memoText }
         tableView.reloadData()
     }
