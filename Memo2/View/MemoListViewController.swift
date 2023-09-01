@@ -7,25 +7,20 @@
 
 import UIKit
 extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
-    //섹션 헤더
-    func createSectionHeaderView(title: String) -> UIView {
-        let headerView = UIView()
-        headerView.backgroundColor = .lightGray
-        let headerLabel = UILabel()
-        headerLabel.setupCustomLabelFont(text: title, isBold: false, textSize: 20)
-        headerLabel.frame = CGRect(x: 20, y: (((footerHeight) / 2) - headerLabel.frame.size.height) / 2, width: tableView.bounds.width, height: headerLabel.intrinsicContentSize.height)
-        headerView.addSubview(headerLabel)
-        return headerView
-    }
+    //섹션 헤더/푸터 기준으로 공통으로 Text 및 배경색 설정하는 함수
+    func createSectionView(text: String, isHeader: Bool) -> UIView {
+        let sectionView = UIView()
+        let sectionLabel = UILabel()
+        sectionLabel.setupCustomLabelFont(text: text, isBold: false, textSize: 20)
     
-    //섹션 푸터
-    func createSectionFooterView(text: String) -> UIView {
-        let footerView = UIView()
-        let footerLabel = UILabel()
-        footerLabel.setupCustomLabelFont(text: text, isBold: false, textSize: 20)
-        footerLabel.frame = CGRect(x: 20, y: (((footerHeight) / 2) - footerLabel.frame.size.height) / 2, width: tableView.bounds.width, height: footerLabel.intrinsicContentSize.height)
-        footerView.addSubview(footerLabel)
-        return footerView
+        if isHeader {
+            sectionView.backgroundColor = .lightGray
+            sectionLabel.frame = CGRect(x: 20, y: (((footerHeight) / 2) - sectionLabel.frame.size.height) / 2, width: tableView.bounds.width, height: sectionLabel.intrinsicContentSize.height)
+        }else {
+            sectionLabel.frame = CGRect(x: 20, y: (((footerHeight) / 2) - sectionLabel.frame.size.height) / 2, width: tableView.bounds.width, height: sectionLabel.intrinsicContentSize.height)
+        }
+        sectionView.addSubview(sectionLabel)
+        return sectionView
     }
     //텍스트를 기준으로 카테고리와 아이템을 반환
     func findSectionItem(with text: String) -> (category: String, item: SectionItem)? {
@@ -36,7 +31,6 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return nil
     }
-    
     //스위치 온오프 여부에 따라 글자가 밑줄긋는 함수
     func configureTextView(for textView: UITextView, with text: String, isSwitchOn: Bool) {
         var attributes: [NSAttributedString.Key: Any] = [:]
@@ -64,32 +58,26 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         memoWriteVC.textContent.text = text
         present(memoWriteVC, animated: true)
     }
-
-    
     //섹션 헤더 관련 설정
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return footerHeight
     }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let category = categories[section]
-        return createSectionHeaderView(title: category.name)
+        return createSectionView(text : category.name, isHeader : true)
     }
     //섹션 푸터 관련 설정
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return headerHeight
     }
-    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let category = categories[section]
-        let text = "완료되지 않은 항목은 총 \(category.items.filter{$0.isSwitchOn == false}.count)건 입니다."
-        return createSectionFooterView(text: text)
+        return createSectionView(text: "완료되지 않은 항목은 총 \(category.items.filter{$0.isSwitchOn == false}.count)건 입니다.", isHeader : false)
     }
     //테이블뷰 셀 관련 함수
     func numberOfSections(in tableView: UITableView) -> Int {
         return categories.count
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories[section].items.count
     }
@@ -154,30 +142,24 @@ class MemoListViewController : UIViewController{
         tableView.dataSource = self
         return tableView
     }()
-    
     private let instance = LocalDBManager.instance
     private var uncompletedItemListCount = 0
     private var categories : [Category] = []
-    
     deinit{
+        NotificationCenter.default.removeObserver(self)
         print("MemoListViewController deinit called")
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        NotificationCenter.default.removeObserver(self)
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        setupSubviews()
         setupLayout()
         setupTableFHView()
-        
         InitLocalDBData()
         updateUI()
         NotificationCenter.default.addObserver(
@@ -187,20 +169,19 @@ class MemoListViewController : UIViewController{
             object: nil
         )
     }
-    
-    @objc func DidReceiveTextChangeCommitStatus(_ notification: Notification) {
+    @objc private func DidReceiveTextChangeCommitStatus(_ notification: Notification) {
         if let status = notification.object as? TextChangeCommitStatus {
-            if status == .Success
+            if status == .success
             {
                 Toast.showToast(message: "요청이 성공적으로 처리되었습니다.", errorMessage: [], font: UIFont.systemFont(ofSize: 14.0), controllerView: self)
                 updateUI()
             }
         }
     }
-    func InitLocalDBData(){
+    private func InitLocalDBData(){
         instance.initializeCategoriesIfNeeded()
     }
-    func updateUI(){
+    private func updateUI(){
         categories = instance.getCategoriesFromUserDefaults()
         uncompletedItemListCount = categories.reduce(0) { (count, category) in
             let categoryCount = category.items.reduce(0) { (itemCount, sectionItem) in
@@ -215,8 +196,7 @@ class MemoListViewController : UIViewController{
         }
         tableView.reloadData()
     }
-    
-    func setupTableFHView(){
+    private func setupTableFHView(){
         //테이블뷰 헤더
         let tableViewHeader = UIView(frame: CGRect(x: 0, y: 0 , width: view.bounds.width, height: headerHeight))
         tableViewHeader.backgroundColor = .white
@@ -239,30 +219,26 @@ class MemoListViewController : UIViewController{
         tableViewFooter.addSubview(footerLabel)
         tableView.tableFooterView = tableViewFooter
     }
-    func setupNavigationBar(){
+    private func setupNavigationBar(){
         let addButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addButtonTapped))
         navigationItem.rightBarButtonItem = addButton
     }
-    @objc func addButtonTapped() {
-        let MemoCategoryVC = MemoCategoryViewController()
-        if let presentationController = MemoCategoryVC.presentationController as? UISheetPresentationController {
-            presentationController.detents = [
-                .medium(),
-            ]
-            //presentationController.prefersGrabberVisible = true 강한참조원인이나 명확히 알수없음 일단 제거
-        }
-
-        self.present(MemoCategoryVC, animated: true)
-    }
-    func setupSubviews(){
+    private func setupLayout() {
         view.addSubview(tableView)
-    }
-    func setupLayout() {
         tableView.snp.makeConstraints { make in
             make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
+    }
+    @objc private func addButtonTapped() {
+        let memoCategoryVC = MemoCategoryViewController()
+        let presentationController = memoCategoryVC.presentationController as? UISheetPresentationController
+        presentationController?.detents = [
+            .medium(),
+        ]
+        presentationController?.delegate = memoCategoryVC
+        self.present(memoCategoryVC, animated: true)
     }
 }

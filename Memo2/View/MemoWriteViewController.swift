@@ -23,7 +23,7 @@ class MemoWriteViewController : UIViewController, UITextViewDelegate
         textView.backgroundColor = .lightGray
         return textView
     }()
-    lazy var confirmButton : UIButton = {
+    private lazy var confirmButton : UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("완료", for: .normal)
         button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
@@ -33,30 +33,23 @@ class MemoWriteViewController : UIViewController, UITextViewDelegate
     }()
     var category : String = ""
     var originText : String = ""
-    let instance = LocalDBManager.instance
     var selectedItem : SectionItem?
+    private let instance = LocalDBManager.instance
     
     deinit{
         print("MemoWriteViewController deinit called")
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupSubviews()
         setupLayout()
         originText = textContent.text
     }
-    
-    func setupSubviews(){
-        view.addSubview(titleLabel)
-        view.addSubview(textContent)
-        view.addSubview(confirmButton)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
     }
-    
-    func setupLayout() {
+    private func setupLayout() {
+        [titleLabel, textContent, confirmButton].forEach(view.addSubview)
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -77,7 +70,7 @@ class MemoWriteViewController : UIViewController, UITextViewDelegate
             make.height.equalToSuperview().multipliedBy(0.09)
         }
     }
-    @objc func confirmButtonTapped() {
+    @objc private func confirmButtonTapped() {
         guard let text = textContent.text, !text.isEmpty else {
             showAlert(title: "에러", message: "내용을 추가해주세요")
             return
@@ -90,6 +83,6 @@ class MemoWriteViewController : UIViewController, UITextViewDelegate
             presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
         }
         textContent.resignFirstResponder()
-        NotificationCenter.default.post(name: .textChangeStatus, object: TextChangeCommitStatus.Success)
+        NotificationCenter.default.post(name: .textChangeStatus, object: TextChangeCommitStatus.success)
     }
 }

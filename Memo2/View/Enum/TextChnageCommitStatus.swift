@@ -7,13 +7,13 @@
 
 import Foundation
 enum TextChangeCommitStatus{
-    case Success
-    case Fail
+    case success
+    case fail
     case none
     var typeValue: String {
         switch self {
-        case .Success: return "성공"
-        case .Fail: return "실패"
+        case .success: return "성공"
+        case .fail: return "실패"
         case .none: return ""
         }
     }
