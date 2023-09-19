@@ -42,13 +42,24 @@ class MemoHomeViewController : UIViewController{
         return button
     }()
     
+    private lazy var moveToProfileButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("프로파일로 이동하기", for: .normal)
+        button.addTarget(self, action: #selector(moveToProfileButtonTapped), for: .touchUpInside)
+        button.setupCustomButtonUI(red: 0.7)
+        button.setupCustomButtonFont()
+        return button
+    }()
+    
     private let mainLoadingindicator = NVActivityIndicatorView(
         frame: CGRect.zero,
         type: .ballSpinFadeLoader,
         color: .black,
         padding: 0
     )
-    
+    deinit{
+        print("MemoHomeViewController deinit called")
+    }
     private let instance = NetworkManager.instance
     override func viewDidAppear(_ animated: Bool) {
         if #available(iOS 16.0, *) {
@@ -108,11 +119,11 @@ class MemoHomeViewController : UIViewController{
         logoImageLoader = RemoteImageLoader(url: URL(string: "https://spartacodingclub.kr/css/images/scc-og.jpg")!, instance: NetworkManager.instance)
     }
     private func setupLayout(){
-        [mainImageView, moveToListButton, moveToCompleteButton,moveToAnimalButton,mainLoadingindicator].forEach(view.addSubview)
+        [mainImageView, moveToListButton, moveToCompleteButton,moveToProfileButton,  moveToAnimalButton,mainLoadingindicator].forEach(view.addSubview)
         mainImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.width.equalToSuperview().multipliedBy(0.5)
+            make.width.equalToSuperview().multipliedBy(0.3)
         }
         mainLoadingindicator.snp.makeConstraints { make in
             make.centerX.equalTo(mainImageView.snp.centerX)
@@ -135,9 +146,15 @@ class MemoHomeViewController : UIViewController{
         moveToAnimalButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(moveToCompleteButton.snp.bottom).offset(30)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-60)
             make.width.equalTo(moveToCompleteButton.snp.width)
             make.height.equalTo(moveToCompleteButton.snp.height)
+        }
+        moveToProfileButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(moveToAnimalButton.snp.bottom).offset(30)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-60)
+            make.width.equalTo(moveToAnimalButton.snp.width)
+            make.height.equalTo(moveToAnimalButton.snp.height)
         }
     }
     @objc private func moveToAnimalButtonTapped(){
@@ -157,7 +174,13 @@ class MemoHomeViewController : UIViewController{
         let memoListVC = MemoCompleteViewController()
         present(memoListVC, animated: true, completion: nil)
     }
+    @objc private func moveToProfileButtonTapped(){
+        let tabController = UITabBarController()
+        let profileViewController = ProfileViewController()
+        profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle"), tag: 0)
+        tabController.viewControllers = [profileViewController]
+        tabController.modalPresentationStyle = .fullScreen
+        tabController.modalTransitionStyle = .crossDissolve
+        self.present(tabController, animated: true, completion: nil)
+    }
 }
-
-
-

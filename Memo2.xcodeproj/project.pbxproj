@@ -22,6 +22,7 @@
 		5F6832342A964068008B3EB7 /* TextChnageCommitStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6832332A964068008B3EB7 /* TextChnageCommitStatus.swift */; };
 		5F828CE52A964E70004EBCF0 /* LocalDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F828CE42A964E70004EBCF0 /* LocalDBManager.swift */; };
 		5F828CE82A9650F3004EBCF0 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F828CE72A9650F3004EBCF0 /* Dummy.swift */; };
+		5F9D1B402AB96E7700595B95 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D1B3F2AB96E7700595B95 /* ProfileViewController.swift */; };
 		5FE03C912A948A180099E297 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03C902A948A180099E297 /* AppDelegate.swift */; };
 		5FE03C932A948A180099E297 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03C922A948A180099E297 /* SceneDelegate.swift */; };
 		5FE03CA82A948B5C0099E297 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03CA72A948B5C0099E297 /* UIViewController.swift */; };
@@ -55,6 +56,7 @@
 		5F6832332A964068008B3EB7 /* TextChnageCommitStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChnageCommitStatus.swift; sourceTree = "<group>"; };
 		5F828CE42A964E70004EBCF0 /* LocalDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBManager.swift; sourceTree = "<group>"; };
 		5F828CE72A9650F3004EBCF0 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		5F9D1B3F2AB96E7700595B95 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5FE03C8D2A948A180099E297 /* Memo2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memo2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FE03C902A948A180099E297 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5FE03C922A948A180099E297 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				5F6832242A95CE3B008B3EB7 /* MemoCategoryViewController.swift */,
 				5F6832262A95D3B5008B3EB7 /* MemoWriteViewController.swift */,
 				5F25E9952A988CB300668C32 /* PetViewController.swift */,
+				5F9D1B3F2AB96E7700595B95 /* ProfileViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				5F6832342A964068008B3EB7 /* TextChnageCommitStatus.swift in Sources */,
 				5F25E9902A9889D600668C32 /* NetworkManager.swift in Sources */,
 				5F6832272A95D3B5008B3EB7 /* MemoWriteViewController.swift in Sources */,
+				5F9D1B402AB96E7700595B95 /* ProfileViewController.swift in Sources */,
 				5F68322B2A960910008B3EB7 /* NotificationCenter.swift in Sources */,
 				5FE03C932A948A180099E297 /* SceneDelegate.swift in Sources */,
 				5FE03CAE2A948C700099E297 /* Memo.swift in Sources */,
