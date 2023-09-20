@@ -1,19 +1,16 @@
 # **Notice**
-1)기존에 작업했던 브랜치의 경우 프로젝트가 열리지 않는 문제가 있어 새롭게 브랜치 만들어 작성했습니다. **이전 커밋내역은 우측 링크에서 확인**하실수있습니다.(https://github.com/ohAkse/Memo2)
-  
-2)UISheetPresentationController를 사용함으로 인해 최소 **IOS 15버전 이상이여야 정상적으로 확인**하실수 있으며, 추가과제 기능 구현 중 이미지를 불러오는 부분에서 16버전이상일 경우와 아닌 경우에 따라 이미지를 받아오는 로직을 다르게 처리하는 부분이 있어 OS 버전별로 기능 확인하실 수 있습니다.(15-15.5 -> 비동기 콜백함수로 처리, 16버전 이상 -> Async await 비동기 함수 처리)  
-* **async/await처리를 담당하는 함수는 두개의 작업이 끝났을때 UI에 동시에 보여지며, 비동기 콜백 함수처리의 경우 작업단위를 구분짓고 처리가 완료되는대로 UI에 표시되게 기능을 구현**하였습니다.
 
-3)에뮬레이터로 Userdefauls 변경사항이 생긴후 바로 빌드 및 재실행시 저장되는 userdefaults 내용을 관리하는 파일에 Write하는 속도가 매우 느림으로 인해 정상적으로 저장 안될수도 있습니다.  
+![Simulator Screenshot - 3 - 2023-09-20 at 21 00 35](https://github.com/ohAkse/TodoList/assets/49290883/b34b3b59-4a1a-4d9b-9a52-17d6f636fe62)
+<p align="center">MVVM Todo 화면 이동하기/ 인스타 UI화면으로 이동하기</p>
 
-![userdefaults](https://github.com/ohAkse/TodoList/assets/49290883/c5f72d62-70a3-423b-bf28-6aff83b8eca0)  
-**-디스크에 UserDefault로 저장한 내용이 늦게 저장되는 화면**
+![Simulator Screenshot - 3 - 2023-09-20 at 21 01 27](https://github.com/ohAkse/TodoList/assets/49290883/594e8965-53dd-4029-b771-350c1d3f7e77)
+<p align="center">인스타 화면(프로필 클릭시 간단하게 르탄이 나이?이름? MVVM 바인딩하여 결과를 확인할수 있는 화면이동 가능</p>
 
-4)추가과제 기능 구현 중 thedog(cat)api를 사용하였는데 받아오는 사진 형식이 간혈적으로 gif인 경우가 있어 못받아오는 경우가 있습니다. gif로 받아왔을때 처리나,이미지 로드 실패했을 때 retry하는 로직 추가, Fail Image 변경 등은 추가하지 않았으며 **로딩바가 계속 나올 시 뒤로가기 했다가 다시 들어갈 경우 정상적으로 이미지 로드 되는것을 확인**하실 수 있습니다.
+*텍스트필드에 입력후 다른 텍스트필드로 Focus 전환시 라벨의 텍스트가 입력되는 단순한 예제(예외처리가 완벽히 되지 않아 키보드가 나온 상태로 입력해주세요)
 
-5)메인화면의 로고 이미지는 매번 viewDidAppear 될때마다 로딩 이미지와 함께 출력됩니다.(viewDidLoad가 아닌 viewDidAppear에 로고이미지를 받아오는 로직을 넣은 이유는 학습용으로 제대로 동작하는지 확인하기 위함입니다. 2)MVVM 패턴을 적용한 브랜치에서는 한번 이미지를 제대로 받아오면 더이상 로딩바가 보이지 않게 설정하였습니다.)
+![Simulator Screenshot - 3 - 2023-09-20 at 21 01 00](https://github.com/ohAkse/TodoList/assets/49290883/9fbf6ad1-353f-4c31-8cbf-8bffe4939677)
+<p align="center">CoreData를 이용하여 간단하게 리스트로 확인하는 화면</p>
 
-6)텍스트 수정 및 삭제 할때 내용이 같은 텍스트가 있을 시 내용이 한번에 수정 될수 있습니다.(개발초기 같은 텍스트가 있을때 고려를 하지 않았습니다.(ex id or hash값 추가등)) 각 셀의 내용마다 중복되는게 없이 추가 or 수정해주세요.
 
 
 # 개발언어 및 모듈
@@ -22,45 +19,49 @@
 사용 기술 :  <img src="https://img.shields.io/badge/async/await-E60012?style=for-the-badge&logo=asciidoctor&logoColor=white"><img src="https://img.shields.io/badge/URLSession-6332F6?style=for-the-badge&logo=asciidoctor&logoColor=white"><img src="https://img.shields.io/badge/userdefaults-58B7FE?style=for-the-badge&logo=asciidoctor&logoColor=white"><img src="https://img.shields.io/badge/GCD-A9225C?style=for-the-badge&logo=asciidoctor&logoColor=white">  
 외부라이브러리 모듈 : <img src="https://img.shields.io/badge/NVActivityIndicatorView-00CEC8?style=for-the-badge&logo=spreadshirt&logoColor=white"><img src="https://img.shields.io/badge/Snapkit-6264A7?style=for-the-badge&logo=snapcraft&logoColor=white">
 
-# **프로젝트 간단 소개**
+# **Q&A**
+a.UserDefaults와 CoreData의 차이점을 README에 적어주세요.
+*UserDefaults의 경우 String, Dictionary, Boolean등 간단한 데이터를 저장하는데 비해 CoreData의 경우 Database와 비슷하게 기능을 하여 보다 복잡한 데이터 구조를 다루어 Local Storage형태로 저장함
+*모델링을 만드는부분에서 UserDefault는 모델링을 바로 저장하는 형식이 아닌, 모델링을 Json으로 직렬화하여 Key값으로 저장해야하는등 번거로움이 있지만, CoreData의 경우 DataModel을 만들면 자동으로 Model을 추가가능
 
-**Model**: 프로젝트에서 데이터를 다루는 모델은 TodoList와 관련된 데이터를 다루는 Memo구조체를 관리하여 userdefault로 변경사항을 추가, 삭제, 저장 등을 다루는 LocalDBManager와 thedogapi를 다루는 animal 구조체를 이용 및 네트워크 통신을 관리하는 NetworkManager로 이루어져 있습니다.
-
-**View**: 총 6가지의 화면이 있습니다. 
-
-![스크린샷 2023-08-27 오후 4 25 19](https://github.com/ohAkse/TodoList/assets/49290883/3fc174e0-717e-475e-bf13-4de42fc3bd27)
+b.MVC를 목표로 구현했던 숙련 과제와 MVVM을 구현했던 ProfileViewController를 비교해보세요.
+*기존에 구현했던 MVC의 경우 View와 Controller사이에서 상호작용을 하고 로직이나 UI 변경 사항이 많아지면 코드의 양이 많아지는 문제가 있었으나, MVVM으로 구현했을 경우 View쪽에서 데이터 바인딩을 하고 ViewModel에 뭔가 요청을 하게되면 ViewModel에서 처리한 결과를 토대로 자동으로 바인딩된 값을 UI에 반영을 할 수 있어 구조를 보다 세분화시켜 관리하기가 더 용이함을 느꼈습니다.
 
 
-MemoHomeViewController : 처음 앱을 실행했을 때 보여지는 View이며, TodoList로 이동하기, 완료 목록 이동하기, 동물 구경하러 이동하기 등 버튼을 터치하여 이동하는 기능을 담당합니다.
 
-MemoListViewController : TodoList를 관리하는 View이며, 이 화면이 담당하는 기능은 다음과 같습니다. 
-1)할일 추가 : 우측 상단의 네비게이션 바의 + 버튼을 터치하여 카테고리와 내용을 입력하면 테이블뷰에 카테고리에 해당되는 내용을 추가합니다.
-2)할일 완료 처리 : 스위치 버튼을 on/off를 함에 따라 항목을 완료처리 할수 있으며, 완료처리가 된 항목은 해당 Text의 밑줄이 그어지고, 완료페이지에서 내용을 따로 확인하실수 있습니다.
-3)할일 수정 : 텍스트 내용을 수정하려면 셀안에 있는 텍스트를 터치하거나, 셀을 우측에서 슬라이딩하여 pencil 아이콘을 터치후 내용을 수정합니다.
-4)할일 삭제 :  셀을 우측에서 슬라이딩하여 trash 아이콘을 터치후 내용을 삭제합니다.
-각 카테고리 별 항목에 따라 완료되지 않은 항목을 확인할 수 있으며, 모든 카테고리의 항목들이 완료가 되었다면, "All Plans have been executed!"라는 문구가 테이블뷰 하단에 나오게 됩니다.
+c.아래 ViewController를 기준으로 구조를 설명해주세요(각 기능별관계는 없어도 됩니다.)
+참고 구조)
+![스크린샷 2023-09-20 오후 10 18 30](https://github.com/ohAkse/TodoList/assets/49290883/dbf009d6-6bce-4f3c-890c-5d7e693a09e4)
 
-MemocategoryViewController : 할일을 추가할 때 카테고리를 선택하는 화면입니다.
+*ProfileViewController : ProfileViewController를 만들면서 해당 뷰컨트롤러의 데이터 흐름을 관리할 viewModel(ProfileViewModel)을 해당 뷰컨트롤러에 주입시켜 viewModel에서 사용될 데이터를 데이터 바인딩시킵니다. 이후 viewModel에 데이터가 변화가 있을 시 해당 View쪽에 변경사항을 알려주어 결과값을 UI에 업데이트 시킵니다. 따라서 ViewModel에 있는 CoreDataManager 및 Observable<Todo> 변수를 이용하여 데이터 흐름을 감지하고 데이터의 추가, 삭제, 수정 등이 있을 시 View쪽에서는 ViewModel로부터 전달받은 값을 UI만 업데이트 시킵니다.
 
-MemoWriteViewController : 할일을 수정하거나 추가할때 내용을 담당하는 화면입니다.
 
-MemoCompleteViewController : 완료된 항목만을 나타내는 항목이며, 네비게이션바 좌측의 카테고리를 선택하여 내용을 확인할수있고 우측의 오름차순/내림차순을 통해 내용을 재정렬하여 확인할수있습니다.
+d.자신이 만든 앱의 구조를 파악하는 것은 쉬운 일이 아닙니다. 만든 코드를 되돌아본다고 생각하면서 구조를 그리고 텍스트로 설명해주세요.
+*MVVM의 가장큰 핵심적인 기능이 View와 분리 및 Data Binding인데 완벽하게 구현은 하지 못했지만 프로그램의 소스코드가 길어지고 로직이 많아질수록 비즈니스로직과 UI 업데이트를 분리함으로써 유지보수 및 관리적인 측면에서 더 용이할것이라는 생각이 들었습니다.
 
-PetViewController : 추가과제를 보여주기 위한 화면으로써, API를 통해 얻은 이미지(강아지,고양이)를 확인 할 수 있는 화면입니다.
 
-**Controller**
-사용자의 User Action을 통해 받은 이벤트를 토대로 데이터를 처리하고 UI를 Update하는 부분으로써 
-본 프로젝트에서는 addtarget이나 closure를 통해 받은 UI 이벤트를 처리하고 userdefaults로 저장후 UI를 다시 update하는 로직으로 구성하였습니다.(주로 extension으로 처리하는 부분이 Controller로 사용되었습니다.)
 
 
 # **본 프로젝트에서 중점적으로 생각해보고 고민해본 사항**
 
-1)**코드 가독성** : 최대한 중복되는 부분은 함수로 묶고 enum처리나 extension으로 분리하여 처리하도록 노력하였습니다.
+1)**View와 Control의 분리** : 최대한 중복되는 부분은 함수로 묶고 enum처리나 extension으로 분리하여 처리하도록 노력하였습니다.
 
-2)**강한 참조 처리** : 모든 페이지를 소멸자 부분에 print를 하여 정상적으로 메모리 해제가 되는지 확인하여, 누수가 없는지 확인하였습니다.
+2)**UI 구성** : 인스타 UI 구성시 최대한 요구사항에 맞춰 작성하도록 노력하였습니다.
 
-3)**사용가능 버전 분기 처리 및 비동기/동시성 처리** : OS 사용 가능 버전 분기 처리에 익숙해지기 위해 간단한 기능 추가(url 이미지 처리)를 처리하는데 분기처리했습니다.(15~15.5버전 비동기 콜백, 16버전이상은 Async/await)
-단, UI의 경우 실행되는 디바이스의 OS 버전이 15보다 낮을 경우 UISheetPresentationController(15버전 이상)로 인해 리스트의 추가/삭제가 안될수 있습니다.
 
-4)**HttpresponseStatus** : 추가기능 구현중 API 통신 중 예외처리 추가 기능 구현이 있어 시도를 해보았지만, 웹쪽 도메인 지식이 많지 않아 최대한 의미에 맞게 분기처리를하여 로그를 남기도록 하였지만 불명확한 부분이 있을 수 있습니다. 
+
+# **보완해야 할 점**
+
+1)**예외 처리** : 특정 기능 작동시 예외처리가 덜되어 오류가 발생할수 았음(ex, 인스타 프로필을 클릭하여 텍스트필드(AgeTextField)에 값을 입력시 에뮬레이터 키보드를 이용하지 않고 수동으로 입력할경우 문제 발생
+
+2)**코드 컨벤션 ** : 급하게 작성하다보니 변수명, 함수이름, 클래스 이름 등 다소 통일성이 부족함
+
+3)**MVVM 패턴 작성 ** : 옵저버 패턴을 이용하여 구현하였는데 효율적인 처리가 있음에도 불구하고 완벽하게 처리 하지못함(ex, tableViewCell databinding)
+
+4)**리팩토링 ** : 개인적 사유로 인한 개발 시간 제약때문에 코드가 난잡함
+
+
+
+
+
 
