@@ -22,6 +22,7 @@
 		5F6832342A964068008B3EB7 /* TextChnageCommitStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6832332A964068008B3EB7 /* TextChnageCommitStatus.swift */; };
 		5F828CE52A964E70004EBCF0 /* LocalDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F828CE42A964E70004EBCF0 /* LocalDBManager.swift */; };
 		5F828CE82A9650F3004EBCF0 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F828CE72A9650F3004EBCF0 /* Dummy.swift */; };
+		5F9C18D12ABAE634008B421F /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9C18D02ABAE634008B421F /* Observable.swift */; };
 		5F9D1B402AB96E7700595B95 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D1B3F2AB96E7700595B95 /* ProfileViewController.swift */; };
 		5F9D1B432AB9E09200595B95 /* TodoCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D1B412AB9E09200595B95 /* TodoCoreData.xcdatamodeld */; };
 		5F9D1B462AB9F40600595B95 /* ProfileDesignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D1B452AB9F40600595B95 /* ProfileDesignViewController.swift */; };
@@ -62,6 +63,7 @@
 		5F6832332A964068008B3EB7 /* TextChnageCommitStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChnageCommitStatus.swift; sourceTree = "<group>"; };
 		5F828CE42A964E70004EBCF0 /* LocalDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBManager.swift; sourceTree = "<group>"; };
 		5F828CE72A9650F3004EBCF0 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		5F9C18D02ABAE634008B421F /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		5F9D1B3F2AB96E7700595B95 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5F9D1B422AB9E09200595B95 /* TodoCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TodoCoreData.xcdatamodel; sourceTree = "<group>"; };
 		5F9D1B452AB9F40600595B95 /* ProfileDesignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDesignViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				5F6832282A95FCA2008B3EB7 /* Toast.swift */,
 				5F68322A2A960910008B3EB7 /* NotificationCenter.swift */,
 				5FF5FCEB2A97935800D9CA8A /* UITableView.swift */,
+				5F9C18D02ABAE634008B421F /* Observable.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				5F9D1B662ABA00D200595B95 /* Todo+CoreDataProperties.swift in Sources */,
 				5F68322B2A960910008B3EB7 /* NotificationCenter.swift in Sources */,
 				5FE03C932A948A180099E297 /* SceneDelegate.swift in Sources */,
+				5F9C18D12ABAE634008B421F /* Observable.swift in Sources */,
 				5FE03CAE2A948C700099E297 /* Memo.swift in Sources */,
 				5F68322E2A964003008B3EB7 /* UISheetPaperType.swift in Sources */,
 				5F6832252A95CE3B008B3EB7 /* MemoCategoryViewController.swift in Sources */,

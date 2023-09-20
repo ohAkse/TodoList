@@ -11,6 +11,13 @@ enum LabelFontSize: CGFloat {
     case medium = 18
     case large = 25
 }
+enum const: Int {
+    case safeAreaTopNameMargin = 10
+    case ButtonsSpacing = 8
+    case safeAreaRightUserFollowMargin = -28
+    case cellSpacing = 2
+}
+
 class CLabel : UILabel{
     
     init(fontSize: LabelFontSize, isBold: Bool) {
@@ -34,9 +41,9 @@ class CButton: UIButton {
         super.init(frame: .zero)
         if isProfilePic {
             let size = UIScreen.main.bounds.width * 0.3 //SuperView의 넓이에 0.3만큼 이미지가 생성되기에 이렇게 설정.
-             self.frame = CGRect(x: 0, y: 0, width: size, height: size)
-             self.layer.cornerRadius = size / 2.0
-             self.clipsToBounds = true
+            self.frame = CGRect(x: 0, y: 0, width: size, height: size)
+            self.layer.cornerRadius = size / 2.0
+            self.clipsToBounds = true
         }
         self.contentMode = .scaleToFill
         
@@ -187,7 +194,7 @@ class ProfileDesignViewController: UIViewController{
     private lazy var middleBar: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 8
+        stackView.spacing = CGFloat(const.ButtonsSpacing.rawValue)
         stackView.addArrangedSubview(followButton)
         stackView.addArrangedSubview(messageButton)
         stackView.addArrangedSubview(moreButton)
@@ -214,7 +221,7 @@ class ProfileDesignViewController: UIViewController{
         collectionView.register(MyCollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
         return collectionView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -225,12 +232,6 @@ class ProfileDesignViewController: UIViewController{
         let view = UIView()
         view.backgroundColor = .gray
         self.view.addSubview(view)
-        view.snp.makeConstraints {
-            $0.top.equalTo(middleBar.snp.bottom)
-            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-            $0.height.equalTo(1)
-        }
         return view
     }()
     lazy var navGalleryStackView: UIStackView = {
@@ -269,10 +270,10 @@ class ProfileDesignViewController: UIViewController{
     }()
     private func configUI()
     {
-        [userName,postLabel,menuButton,userPic,postNumber,followerLabel,fowllowerNumber,followingLabel,followingNumber,rtaneLabel,iosDevelopLabel,spartacodingclubLabel,followButton,messageButton,moreButton].forEach(view.addSubview)
+        [userName,menuButton,userPic,userFollowInfoStackView,userInfoStackView,userInfoStackView,middleBar,divider,navGalleryStackView,collectionView].forEach(view.addSubview)
         userName.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(const.safeAreaTopNameMargin.rawValue)
             $0.width.equalToSuperview().multipliedBy(0.4)
         }
         menuButton.snp.makeConstraints{
@@ -283,51 +284,35 @@ class ProfileDesignViewController: UIViewController{
         }
         userPic.snp.makeConstraints {
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(14)
-            $0.top.equalTo(menuButton.snp.bottom).offset(40)
+            $0.top.equalTo(menuButton.snp.bottom).offset(20)
             $0.width.equalToSuperview().multipliedBy(0.3)
             $0.height.equalTo(userPic.snp.width)
         }
-        view.addSubview(userFollowInfoStackView)
         userFollowInfoStackView.snp.makeConstraints {
             $0.centerY.equalTo(userPic.snp.centerY)
             $0.leading.equalTo(userPic.snp.trailing)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-28)
-        }
-        
-        view.addSubview(userInfoStackView)
-        rtaneLabel.snp.makeConstraints {
-            $0.leading.equalTo(userInfoStackView.snp.leading)
-        }
-        iosDevelopLabel.snp.makeConstraints {
-            $0.leading.equalTo(userInfoStackView.snp.leading)
-        }
-        spartacodingclubLabel.snp.makeConstraints {
-            $0.leading.equalTo(userInfoStackView.snp.leading)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(const.safeAreaRightUserFollowMargin.rawValue)
         }
         userInfoStackView.snp.makeConstraints {
             $0.top.equalTo(userPic.snp.bottom).offset(20)
             $0.leading.equalTo(userPic.snp.leading)
         }
-        view.addSubview(middleBar)
         middleBar.snp.makeConstraints {
             $0.top.equalTo(userInfoStackView.snp.bottom).offset(10)
             $0.leading.equalTo(userPic.snp.leading)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-28)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-10)
         }
-        view.addSubview(divider)
         divider.snp.makeConstraints {
             $0.top.equalTo(middleBar.snp.bottom)
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
             $0.height.equalTo(1)
         }
-        view.addSubview(navGalleryStackView)
         navGalleryStackView.snp.makeConstraints {
             $0.top.equalTo(divider.snp.bottom)
             $0.leading.equalToSuperview()
-            $0.width.equalToSuperview().dividedBy(3).offset(-2)// 중단바 Indicator를 딱 1/3할시 콜렉션뷰의 여백주는것(콜렉션 셀 높이 넓이 2)때문에 안맞아서 -2빼서 계산
+            $0.width.equalToSuperview().dividedBy(3).offset(-(const.cellSpacing.rawValue))
         }
-        view.addSubview(collectionView)
         collectionView.snp.makeConstraints{
             $0.top.equalTo(navGalleryStackView.snp.bottom)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
@@ -336,9 +321,6 @@ class ProfileDesignViewController: UIViewController{
         }
     }
 }
-
-let imageList : [String] = ["picture1","picture2","picture3","picture4","picture5","picture6","picture7"]
-
 extension ProfileDesignViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageList.count
@@ -350,26 +332,21 @@ extension ProfileDesignViewController: UICollectionViewDelegate, UICollectionVie
         return cell
     }
 }
-
 extension ProfileDesignViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellWidth = ((collectionView.frame.width ) / 3) - 2
+        let cellWidth = ((collectionView.frame.width ) / 3) - CGFloat(const.cellSpacing.rawValue)
         let cellHeight = cellWidth
         return CGSize(width: cellWidth, height: cellHeight)
     }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 2.0
+        return CGFloat(const.cellSpacing.rawValue)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2.0
+        return CGFloat(const.cellSpacing.rawValue)
     }
 }
-
-
 class MyCollectionViewCell: UICollectionViewCell {
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
