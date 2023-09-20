@@ -5,7 +5,6 @@
 //  Created by 박유경 on 2023/09/20.
 //
 import UIKit
-import SnapKit
 enum LabelFontSize: CGFloat {
     case small = 10
     case medium = 18
@@ -73,6 +72,7 @@ class ProfileDesignViewController: UIViewController{
     }()
     private lazy var userPic: CButton = {
         let button = CButton(image: UIImage(named: "picture1"),isProfilePic : true)
+        button.addTarget(self, action: #selector(userPicButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -320,6 +320,13 @@ class ProfileDesignViewController: UIViewController{
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
+    @objc func userPicButtonTapped(){
+        let rtaneVC = ProfileRtaneViewController(viewModel: ProfileRtaneViewModel())
+        rtaneVC.bindViewModel()
+        rtaneVC.modalPresentationStyle = .fullScreen
+        rtaneVC.modalTransitionStyle = .crossDissolve
+        self.present(rtaneVC, animated: true, completion: nil)
+    }
 }
 extension ProfileDesignViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -346,6 +353,7 @@ extension ProfileDesignViewController: UICollectionViewDelegateFlowLayout {
         return CGFloat(const.cellSpacing.rawValue)
     }
 }
+
 class MyCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)

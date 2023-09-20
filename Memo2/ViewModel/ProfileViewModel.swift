@@ -4,11 +4,20 @@
 //
 //  Created by 박유경 on 2023/09/20.
 //
-class ProfileViewModel
+
+protocol ProfileViewModelProtocol{
+    func addAction()
+    func loadData()
+    func getTodoList() -> [Todo]
+    func getTodoCount() -> Int
+    func deleteTodo(index cellIndex: Int)
+    func editTodo(index cellIndex: Int, isCompleted: Bool)
+}
+
+class ProfileViewModel : ProfileViewModelProtocol
 {
     var coreDataManager : CoreDataManager!
     var todoList : Observable<[Todo]> = Observable<[Todo]>([])
-    var title : Observable<String> = Observable<String>("")
     init(coreDataManager : CoreDataManager){
         self.coreDataManager = coreDataManager
     }

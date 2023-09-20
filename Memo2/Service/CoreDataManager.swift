@@ -16,11 +16,9 @@ class CoreDataManager {
         }
         return container
     }()
-    
     var mainContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
-    
     func createTodo(title: String, isCompleted: Bool) {
         let newTodo = Todo(context: mainContext)
         newTodo.id = UUID()
