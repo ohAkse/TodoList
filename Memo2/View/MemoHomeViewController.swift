@@ -37,6 +37,24 @@ class MemoHomeViewController : UIViewController{
         let button = UIButton(type: .system)
         button.setTitle("동물 구경하러 이동하기", for: .normal)
         button.addTarget(self, action: #selector(moveToAnimalButtonTapped), for: .touchUpInside)
+        button.setupCustomButtonUI()
+        button.setupCustomButtonFont()
+        return button
+    }()
+    
+    private lazy var moveToProfileButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("인스타 UI화면으로 이동하기", for: .normal)
+        button.addTarget(self, action: #selector(moveToProfileButtonTapped), for: .touchUpInside)
+        button.setupCustomButtonUI(red: 0.7)
+        button.setupCustomButtonFont()
+        return button
+    }()
+    
+    private lazy var moveToTodoMVVMButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("MVVM Todo 화면 이동하기", for: .normal)
+        button.addTarget(self, action: #selector(moveToTodoMVVMButtonTapped), for: .touchUpInside)
         button.setupCustomButtonUI(red: 0.7)
         button.setupCustomButtonFont()
         return button
@@ -48,7 +66,9 @@ class MemoHomeViewController : UIViewController{
         color: .black,
         padding: 0
     )
-    
+    deinit{
+        print("MemoHomeViewController deinit called")
+    }
     private let instance = NetworkManager.instance
     override func viewDidAppear(_ animated: Bool) {
         if #available(iOS 16.0, *) {
@@ -108,11 +128,11 @@ class MemoHomeViewController : UIViewController{
         logoImageLoader = RemoteImageLoader(url: URL(string: "https://spartacodingclub.kr/css/images/scc-og.jpg")!, instance: NetworkManager.instance)
     }
     private func setupLayout(){
-        [mainImageView, moveToListButton, moveToCompleteButton,moveToAnimalButton,mainLoadingindicator].forEach(view.addSubview)
+        [mainImageView, moveToListButton, moveToCompleteButton,moveToProfileButton,  moveToAnimalButton,mainLoadingindicator,moveToTodoMVVMButton].forEach(view.addSubview)
         mainImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.width.equalToSuperview().multipliedBy(0.5)
+            make.width.equalToSuperview().multipliedBy(0.3)
         }
         mainLoadingindicator.snp.makeConstraints { make in
             make.centerX.equalTo(mainImageView.snp.centerX)
@@ -135,9 +155,21 @@ class MemoHomeViewController : UIViewController{
         moveToAnimalButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(moveToCompleteButton.snp.bottom).offset(30)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-60)
             make.width.equalTo(moveToCompleteButton.snp.width)
             make.height.equalTo(moveToCompleteButton.snp.height)
+        }
+        moveToTodoMVVMButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(moveToAnimalButton.snp.bottom).offset(30)
+            make.width.equalTo(moveToAnimalButton.snp.width)
+            make.height.equalTo(moveToAnimalButton.snp.height)
+        }
+        moveToProfileButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(moveToTodoMVVMButton.snp.bottom).offset(30)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-60)
+            make.width.equalTo(moveToTodoMVVMButton.snp.width)
+            make.height.equalTo(moveToTodoMVVMButton.snp.height)
         }
     }
     @objc private func moveToAnimalButtonTapped(){
@@ -157,7 +189,20 @@ class MemoHomeViewController : UIViewController{
         let memoListVC = MemoCompleteViewController()
         present(memoListVC, animated: true, completion: nil)
     }
+    @objc private func moveToProfileButtonTapped(){
+        let tabController = UITabBarController()
+        let profileDesignController = ProfileDesignViewController()
+        profileDesignController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle"), tag: 0)
+        tabController.viewControllers = [profileDesignController]
+        tabController.modalPresentationStyle = .fullScreen
+        tabController.modalTransitionStyle = .crossDissolve
+        self.present(tabController, animated: true, completion: nil)
+    }
+    @objc private func moveToTodoMVVMButtonTapped(){
+        let profileVC = ProfileViewController(viewModel: ProfileViewModel(coreDataManager: CoreDataManager()))
+        profileVC.bindViewModel()
+        UIView.transition(with: navigationController!.view, duration: 0.5, options: .transitionFlipFromBottom, animations: {
+            self.navigationController?.pushViewController(profileVC, animated: false)
+        }, completion: nil)
+    }
 }
-
-
-

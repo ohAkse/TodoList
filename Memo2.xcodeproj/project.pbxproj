@@ -22,6 +22,17 @@
 		5F6832342A964068008B3EB7 /* TextChnageCommitStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6832332A964068008B3EB7 /* TextChnageCommitStatus.swift */; };
 		5F828CE52A964E70004EBCF0 /* LocalDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F828CE42A964E70004EBCF0 /* LocalDBManager.swift */; };
 		5F828CE82A9650F3004EBCF0 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F828CE72A9650F3004EBCF0 /* Dummy.swift */; };
+		5F9C18D12ABAE634008B421F /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9C18D02ABAE634008B421F /* Observable.swift */; };
+		5F9C18D72ABAE718008B421F /* ProfileRtaneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9C18D62ABAE718008B421F /* ProfileRtaneViewModel.swift */; };
+		5F9C18D92ABAE81C008B421F /* ProfileRtaneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9C18D82ABAE81C008B421F /* ProfileRtaneViewController.swift */; };
+		5F9C18DB2ABAEC2B008B421F /* BindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9C18DA2ABAEC2B008B421F /* BindableType.swift */; };
+		5F9D1B402AB96E7700595B95 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D1B3F2AB96E7700595B95 /* ProfileViewController.swift */; };
+		5F9D1B432AB9E09200595B95 /* TodoCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D1B412AB9E09200595B95 /* TodoCoreData.xcdatamodeld */; };
+		5F9D1B462AB9F40600595B95 /* ProfileDesignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D1B452AB9F40600595B95 /* ProfileDesignViewController.swift */; };
+		5F9D1B482AB9F60600595B95 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D1B472AB9F60600595B95 /* ProfileViewModel.swift */; };
+		5F9D1B652ABA00D200595B95 /* Todo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D1B632ABA00D200595B95 /* Todo+CoreDataClass.swift */; };
+		5F9D1B662ABA00D200595B95 /* Todo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D1B642ABA00D200595B95 /* Todo+CoreDataProperties.swift */; };
+		5F9D1B682ABA16C300595B95 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D1B672ABA16C300595B95 /* CoreDataManager.swift */; };
 		5FE03C912A948A180099E297 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03C902A948A180099E297 /* AppDelegate.swift */; };
 		5FE03C932A948A180099E297 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03C922A948A180099E297 /* SceneDelegate.swift */; };
 		5FE03CA82A948B5C0099E297 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE03CA72A948B5C0099E297 /* UIViewController.swift */; };
@@ -55,6 +66,17 @@
 		5F6832332A964068008B3EB7 /* TextChnageCommitStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChnageCommitStatus.swift; sourceTree = "<group>"; };
 		5F828CE42A964E70004EBCF0 /* LocalDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBManager.swift; sourceTree = "<group>"; };
 		5F828CE72A9650F3004EBCF0 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		5F9C18D02ABAE634008B421F /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		5F9C18D62ABAE718008B421F /* ProfileRtaneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRtaneViewModel.swift; sourceTree = "<group>"; };
+		5F9C18D82ABAE81C008B421F /* ProfileRtaneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRtaneViewController.swift; sourceTree = "<group>"; };
+		5F9C18DA2ABAEC2B008B421F /* BindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindableType.swift; sourceTree = "<group>"; };
+		5F9D1B3F2AB96E7700595B95 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		5F9D1B422AB9E09200595B95 /* TodoCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TodoCoreData.xcdatamodel; sourceTree = "<group>"; };
+		5F9D1B452AB9F40600595B95 /* ProfileDesignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDesignViewController.swift; sourceTree = "<group>"; };
+		5F9D1B472AB9F60600595B95 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		5F9D1B632ABA00D200595B95 /* Todo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Todo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5F9D1B642ABA00D200595B95 /* Todo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Todo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5F9D1B672ABA16C300595B95 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		5FE03C8D2A948A180099E297 /* Memo2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memo2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FE03C902A948A180099E297 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5FE03C922A948A180099E297 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +134,7 @@
 				5F0692FC2AA0F7EF0029666B /* Loader */,
 				5F828CE42A964E70004EBCF0 /* LocalDBManager.swift */,
 				5F25E98F2A9889D600668C32 /* NetworkManager.swift */,
+				5F9D1B672ABA16C300595B95 /* CoreDataManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -124,9 +147,20 @@
 			path = Global;
 			sourceTree = "<group>";
 		};
+		5F9D1B442AB9F3CD00595B95 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5F9D1B472AB9F60600595B95 /* ProfileViewModel.swift */,
+				5F9C18D62ABAE718008B421F /* ProfileRtaneViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		5FE03C842A948A180099E297 = {
 			isa = PBXGroup;
 			children = (
+				5F9D1B632ABA00D200595B95 /* Todo+CoreDataClass.swift */,
+				5F9D1B642ABA00D200595B95 /* Todo+CoreDataProperties.swift */,
 				5FE03C8F2A948A180099E297 /* Memo2 */,
 				5FE03C8E2A948A180099E297 /* Products */,
 			);
@@ -143,11 +177,12 @@
 		5FE03C8F2A948A180099E297 /* Memo2 */ = {
 			isa = PBXGroup;
 			children = (
+				5FE03CA92A948BC10099E297 /* View */,
+				5FE03CAA2A948BCF0099E297 /* Model */,
+				5F9D1B442AB9F3CD00595B95 /* ViewModel */,
 				5F828CE62A9650E8004EBCF0 /* Global */,
 				5F828CE32A964E59004EBCF0 /* Service */,
 				5FE03CAC2A948BF40099E297 /* EntryDelegate */,
-				5FE03CAA2A948BCF0099E297 /* Model */,
-				5FE03CA92A948BC10099E297 /* View */,
 				5FE03CA42A948B390099E297 /* Extension */,
 				5FE03C992A948A190099E297 /* Assets.xcassets */,
 				5FE03C9B2A948A190099E297 /* LaunchScreen.storyboard */,
@@ -165,6 +200,8 @@
 				5F6832282A95FCA2008B3EB7 /* Toast.swift */,
 				5F68322A2A960910008B3EB7 /* NotificationCenter.swift */,
 				5FF5FCEB2A97935800D9CA8A /* UITableView.swift */,
+				5F9C18D02ABAE634008B421F /* Observable.swift */,
+				5F9C18DA2ABAEC2B008B421F /* BindableType.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -180,6 +217,9 @@
 				5F6832242A95CE3B008B3EB7 /* MemoCategoryViewController.swift */,
 				5F6832262A95D3B5008B3EB7 /* MemoWriteViewController.swift */,
 				5F25E9952A988CB300668C32 /* PetViewController.swift */,
+				5F9D1B3F2AB96E7700595B95 /* ProfileViewController.swift */,
+				5F9D1B452AB9F40600595B95 /* ProfileDesignViewController.swift */,
+				5F9C18D82ABAE81C008B421F /* ProfileRtaneViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -187,6 +227,7 @@
 		5FE03CAA2A948BCF0099E297 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5F9D1B412AB9E09200595B95 /* TodoCoreData.xcdatamodeld */,
 				5FE03CAD2A948C700099E297 /* Memo.swift */,
 				5F25E9992A98B1E600668C32 /* Animal.swift */,
 			);
@@ -289,13 +330,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FE03C912A948A180099E297 /* AppDelegate.swift in Sources */,
+				5F9C18D72ABAE718008B421F /* ProfileRtaneViewModel.swift in Sources */,
 				5F828CE82A9650F3004EBCF0 /* Dummy.swift in Sources */,
+				5F9D1B462AB9F40600595B95 /* ProfileDesignViewController.swift in Sources */,
 				5F6832292A95FCA2008B3EB7 /* Toast.swift in Sources */,
 				5F6832342A964068008B3EB7 /* TextChnageCommitStatus.swift in Sources */,
 				5F25E9902A9889D600668C32 /* NetworkManager.swift in Sources */,
 				5F6832272A95D3B5008B3EB7 /* MemoWriteViewController.swift in Sources */,
+				5F9D1B432AB9E09200595B95 /* TodoCoreData.xcdatamodeld in Sources */,
+				5F9D1B402AB96E7700595B95 /* ProfileViewController.swift in Sources */,
+				5F9C18D92ABAE81C008B421F /* ProfileRtaneViewController.swift in Sources */,
+				5F9D1B662ABA00D200595B95 /* Todo+CoreDataProperties.swift in Sources */,
 				5F68322B2A960910008B3EB7 /* NotificationCenter.swift in Sources */,
 				5FE03C932A948A180099E297 /* SceneDelegate.swift in Sources */,
+				5F9C18D12ABAE634008B421F /* Observable.swift in Sources */,
 				5FE03CAE2A948C700099E297 /* Memo.swift in Sources */,
 				5F68322E2A964003008B3EB7 /* UISheetPaperType.swift in Sources */,
 				5F6832252A95CE3B008B3EB7 /* MemoCategoryViewController.swift in Sources */,
@@ -305,14 +353,18 @@
 				5F25E9962A988CB300668C32 /* PetViewController.swift in Sources */,
 				5FE03CB02A9490960099E297 /* MemoListViewController.swift in Sources */,
 				5FE03CA82A948B5C0099E297 /* UIViewController.swift in Sources */,
+				5F9D1B682ABA16C300595B95 /* CoreDataManager.swift in Sources */,
 				5F25E99A2A98B1E600668C32 /* Animal.swift in Sources */,
 				5FE03CCB2A94ED820099E297 /* TodoListCell.swift in Sources */,
 				5FE03CC62A94A8A10099E297 /* UIButton.swift in Sources */,
 				5FE03CB62A9490ED0099E297 /* MemoCompleteViewController.swift in Sources */,
+				5F9D1B482AB9F60600595B95 /* ProfileViewModel.swift in Sources */,
 				5FE03CC82A94CFB50099E297 /* UILabel.swift in Sources */,
+				5F9D1B652ABA00D200595B95 /* Todo+CoreDataClass.swift in Sources */,
 				5FE03CB82A94911B0099E297 /* MemoHomeViewController.swift in Sources */,
 				5F6832302A964022008B3EB7 /* CategoryType.swift in Sources */,
 				5FF5FCEC2A97935800D9CA8A /* UITableView.swift in Sources */,
+				5F9C18DB2ABAEC2B008B421F /* BindableType.swift in Sources */,
 				5F25E9982A989B4300668C32 /* NetworkResponseStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -554,6 +606,19 @@
 			productName = NVActivityIndicatorView;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		5F9D1B412AB9E09200595B95 /* TodoCoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5F9D1B422AB9E09200595B95 /* TodoCoreData.xcdatamodel */,
+			);
+			currentVersion = 5F9D1B422AB9E09200595B95 /* TodoCoreData.xcdatamodel */;
+			path = TodoCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5FE03C852A948A180099E297 /* Project object */;
 }
