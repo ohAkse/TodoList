@@ -18,7 +18,6 @@ enum const: Int {
 }
 
 class CLabel : UILabel{
-    
     init(fontSize: LabelFontSize, isBold: Bool) {
         super.init(frame: .zero)
         self.layer.cornerRadius = 10
@@ -60,6 +59,11 @@ class CButton: UIButton {
 }
 class ProfileDesignViewController: UIViewController{
     
+    private lazy var backButton : CButton = {
+        let button = CButton(image: UIImage(systemName: "arrowshape.backward.fill"))
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button
+    }()
     private lazy var userName : CLabel = {
         let label = CLabel(fontSize: LabelFontSize.large, isBold: true)
         label.text = "nabaecamp"
@@ -270,7 +274,7 @@ class ProfileDesignViewController: UIViewController{
     }()
     private func configUI()
     {
-        [userName,menuButton,userPic,userFollowInfoStackView,userInfoStackView,userInfoStackView,middleBar,divider,navGalleryStackView,collectionView].forEach(view.addSubview)
+        [backButton,userName,menuButton,userPic,userFollowInfoStackView,userInfoStackView,userInfoStackView,middleBar,divider,navGalleryStackView,collectionView].forEach(view.addSubview)
         userName.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(const.safeAreaTopNameMargin.rawValue)
@@ -279,6 +283,12 @@ class ProfileDesignViewController: UIViewController{
         menuButton.snp.makeConstraints{
             $0.centerY.equalTo(userName.snp.centerY)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-28)
+            $0.height.equalTo(userName.snp.height).multipliedBy(0.7)
+            $0.width.equalToSuperview().multipliedBy(0.05)
+        }
+        backButton.snp.makeConstraints{
+            $0.centerY.equalTo(userName.snp.centerY)
+            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(20)
             $0.height.equalTo(userName.snp.height).multipliedBy(0.7)
             $0.width.equalToSuperview().multipliedBy(0.05)
         }
@@ -326,6 +336,9 @@ class ProfileDesignViewController: UIViewController{
         rtaneVC.modalPresentationStyle = .fullScreen
         rtaneVC.modalTransitionStyle = .crossDissolve
         self.present(rtaneVC, animated: true, completion: nil)
+    }
+    @objc func backButtonTapped(){
+        self.dismiss(animated: true)
     }
 }
 extension ProfileDesignViewController: UICollectionViewDelegate, UICollectionViewDataSource {

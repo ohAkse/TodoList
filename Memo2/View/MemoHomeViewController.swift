@@ -196,7 +196,7 @@ class MemoHomeViewController : UIViewController{
         tabController.viewControllers = [profileDesignController]
         tabController.modalPresentationStyle = .fullScreen
         tabController.modalTransitionStyle = .crossDissolve
-        self.present(tabController, animated: true, completion: nil)
+        present(tabController, animated: true, completion: nil)
     }
     @objc private func moveToTodoMVVMButtonTapped(){
         let profileVC = ProfileViewController(viewModel: ProfileViewModel(coreDataManager: CoreDataManager()))
